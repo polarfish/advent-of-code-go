@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/polarfish/advent-of-code-go/utils"
-	year2015day01 "github.com/polarfish/advent-of-code-go/year2015/day01"
+	"github.com/polarfish/advent-of-code-go/year2015/day01"
 )
 
 var allPuzzles = []*utils.Puzzle{
@@ -19,12 +19,12 @@ var allPuzzles = []*utils.Puzzle{
 func main() {
 	args := os.Args[1:]
 
-	year := -1
+	var year int
 	if len(args) > 0 {
 		year, _ = strconv.Atoi(args[0])
 	}
 
-	day := -1
+	var day int
 	if len(args) > 1 {
 		day, _ = strconv.Atoi(args[1])
 	}
@@ -34,9 +34,9 @@ func main() {
 	stdInputBytes, _ := io.ReadAll(os.Stdin)
 	stdInput := string(stdInputBytes)
 
-	puzzles := []*utils.Puzzle{}
+	var puzzles []*utils.Puzzle
 	for _, p := range allPuzzles {
-		if (day == -1 || day == p.Day) && (year == -1 || year == p.Year) {
+		if (day == 0 || day == p.Day) && (year == 0 || year == p.Year) {
 			puzzles = append(puzzles, p)
 		}
 	}
@@ -81,6 +81,6 @@ func main() {
 		fmt.Println(utils.FormatDuration(r.Duration2), "Part 2:", r.Result2)
 		fmt.Println()
 	}
-	fmt.Println("Total")
+	fmt.Println("=== Total ===")
 	fmt.Println(utils.FormatDuration(totalElapsed))
 }
