@@ -28,6 +28,8 @@ fi
 
 DAY_PADDED=$(printf "%02d" "$DAY")
 
+echo "Preparing year $YEAR day $DAY"
+
 # Create output directory
 OUTPUT_DIR="year$YEAR/day$DAY_PADDED"
 mkdir -p $OUTPUT_DIR
@@ -39,11 +41,96 @@ if [ -e "$INPUT_PATH" ]; then
   echo "Skip creating $INPUT_PATH (file exists)"
 else
   # Download the input
-  curl -s -H "Cookie: session=$SESSION" "https://adventofcode.com/$YEAR/day/$DAY/input" -o "$OUTPUT_DIR/day${DAY_PADDED}.txt"
+  curl -s -H "Cookie: session=$SESSION" "https://adventofcode.com/$YEAR/day/$DAY/input" -o "$INPUT_PATH"
   if [[ $? -eq 0 ]]; then
-    echo "Created $OUTPUT_DIR/day${DAY_PADDED}.txt"
+    echo "Created $INPUT_PATH"
   else
-    echo "Failed to create $OUTPUT_DIR/day${DAY_PADDED}.txt"
+    echo "Failed to create $INPUT_PATH"
+    exit 1
+  fi
+fi
+
+SOLUTION_PATH="$OUTPUT_DIR/day${DAY_PADDED}.go"
+# Check for the existing solution file
+if [ -e "$SOLUTION_PATH" ]; then
+  echo "Skip creating $SOLUTION_PATH (file exists)"
+else
+  PUZZLE_TITLE=$(curl -s "$BASE_URL" | sed -n 's/.*--- Day [0-9]\{1,2\}: \(.*\) ---.*/\1/p')
+
+  # Creating the solution stub
+echo "package year${YEAR}day${DAY_PADDED}
+
+import (
+	_ \"embed\"
+	\"strconv\"
+
+	\"github.com/polarfish/advent-of-code-go/utils\"
+)
+
+//go:embed day${DAY_PADDED}.txt
+var input string
+
+func New() *utils.Puzzle {
+	return &utils.Puzzle{
+		Year:  ${YEAR},
+		Day:   ${DAY},
+		Name:  \"${PUZZLE_TITLE}\",
+		Input: &input,
+		Part1: Part1,
+		Part2: Part2,
+	}
+}
+
+func Part1(input *string) string {
+	return strconv.Itoa(0)
+}
+
+func Part2(input *string) string {
+	return strconv.Itoa(0)
+}" > $SOLUTION_PATH
+
+  if [[ $? -eq 0 ]]; then
+    echo "Created $SOLUTION_PATH"
+  else
+    echo "Failed to create $SOLUTION_PATH"
+    exit 1
+  fi
+fi
+
+TESTS_PATH="$OUTPUT_DIR/day${DAY_PADDED}_test.go"
+# Check for the existing tests file
+if [ -e "$TESTS_PATH" ]; then
+  echo "Skip creating $TESTS_PATH (file exists)"
+else
+
+  # Creating the tests stub
+echo "package year${YEAR}day${DAY_PADDED}
+
+import \"testing\"
+
+func TestPart1(t *testing.T) {
+  got := Part1(&input)
+  t.Log(\"Part 1:\", got)
+  want := \"0\"
+  if got != want {
+    t.Errorf(\"Part1: \ngot %s\nwant %s\", got, want)
+  }
+}
+
+func TestPart2(t *testing.T) {
+  got := Part2(&input)
+  t.Log(\"Part 2:\", got)
+  want := \"0\"
+  if got != want {
+    t.Errorf(\"Part2: \ngot %s\nwant %s\", got, want)
+  }
+}
+" > $TESTS_PATH
+
+  if [[ $? -eq 0 ]]; then
+    echo "Created $TESTS_PATH"
+  else
+    echo "Failed to create $TESTS_PATH"
     exit 1
   fi
 fi
