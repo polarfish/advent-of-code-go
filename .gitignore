@@ -26,3 +26,6 @@ go.work.sum
 
 # puzzle input files
 day*.txt
+
+# resulting binary
+advent-of-code-go
