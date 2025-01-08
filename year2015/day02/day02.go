@@ -49,13 +49,16 @@ func Part2(input *string) string {
 var dimensionsRegexp = regexp.MustCompile("(\\d+)x(\\d+)x(\\d+)")
 
 func parseInput(input *string) [][]int {
-	linesCount := strings.Count(*input, "\n") + 1
-	result := make([][]int, 0, linesCount)
-	matches := dimensionsRegexp.FindAllStringSubmatch(*input, -1)
-	for _, m := range matches {
-		l, _ := strconv.Atoi(m[1])
-		w, _ := strconv.Atoi(m[2])
-		h, _ := strconv.Atoi(m[3])
+	lines := strings.Split(*input, "\n")
+	result := make([][]int, 0, len(lines))
+	for _, line := range lines {
+		if line == "" {
+			continue
+		}
+		split := strings.Split(line, "x")
+		l, _ := strconv.Atoi(split[0])
+		w, _ := strconv.Atoi(split[1])
+		h, _ := strconv.Atoi(split[2])
 		result = append(result, []int{l, w, h})
 	}
 	return result
