@@ -11,9 +11,9 @@ type Puzzle struct {
 	Day   int
 	Year  int
 	Name  string
-	Input *string
-	Part1 func(input *string) string
-	Part2 func(input *string) string
+	Input string
+	Part1 func(input string) string
+	Part2 func(input string) string
 }
 
 type Result struct {

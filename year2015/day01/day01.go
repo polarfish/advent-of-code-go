@@ -15,15 +15,15 @@ func New() *utils.Puzzle {
 		Year:  2015,
 		Day:   1,
 		Name:  "Not Quite Lisp",
-		Input: &input,
+		Input: input,
 		Part1: Part1,
 		Part2: Part2,
 	}
 }
 
-func Part1(input *string) string {
+func Part1(input string) string {
 	floor := 0
-	for _, ch := range *input {
+	for _, ch := range input {
 		if ch == '(' {
 			floor += 1
 		} else {
@@ -33,9 +33,9 @@ func Part1(input *string) string {
 	return strconv.Itoa(floor)
 }
 
-func Part2(input *string) string {
+func Part2(input string) string {
 	floor := 0
-	for i, ch := range *input {
+	for i, ch := range input {
 		if ch == '(' {
 			floor += 1
 		} else {

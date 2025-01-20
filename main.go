@@ -57,9 +57,9 @@ func main() {
 	for i, p := range puzzles {
 		result := utils.Result{Puzzle: p}
 
-		var input *string
+		var input string
 		if len(stdInput) > 0 {
-			input = &stdInput
+			input = stdInput
 		} else {
 			input = p.Input
 		}
