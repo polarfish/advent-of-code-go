@@ -75,17 +75,17 @@ func New() *utils.Puzzle {
 		Year:  ${YEAR},
 		Day:   ${DAY},
 		Name:  \"${PUZZLE_TITLE}\",
-		Input: &input,
+		Input: input,
 		Part1: Part1,
 		Part2: Part2,
 	}
 }
 
-func Part1(input *string) string {
+func Part1(input string) string {
 	return strconv.Itoa(0)
 }
 
-func Part2(input *string) string {
+func Part2(input string) string {
 	return strconv.Itoa(0)
 }" > $SOLUTION_PATH
 
@@ -109,7 +109,7 @@ echo "package year${YEAR}day${DAY_PADDED}
 import \"testing\"
 
 func TestPart1(t *testing.T) {
-  got := Part1(&input)
+  got := Part1(input)
   t.Log(\"Part 1:\", got)
   want := \"0\"
   if got != want {
@@ -118,7 +118,7 @@ func TestPart1(t *testing.T) {
 }
 
 func TestPart2(t *testing.T) {
-  got := Part2(&input)
+  got := Part2(input)
   t.Log(\"Part 2:\", got)
   want := \"0\"
   if got != want {
