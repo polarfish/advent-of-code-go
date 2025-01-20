@@ -2,7 +2,6 @@ package year2015day02
 
 import (
 	_ "embed"
-	"regexp"
 	"strconv"
 	"strings"
 
@@ -46,20 +45,20 @@ func Part2(input *string) string {
 	return strconv.Itoa(result)
 }
 
-var dimensionsRegexp = regexp.MustCompile("(\\d+)x(\\d+)x(\\d+)")
-
 func parseInput(input *string) [][]int {
-	lines := strings.Split(*input, "\n")
-	result := make([][]int, 0, len(lines))
-	for _, line := range lines {
-		if line == "" {
-			continue
+	result := make([][]int, 0, strings.Count(*input, "\n"))
+	ln := make([]int, 3)
+	i := 0
+	for _, ch := range *input {
+		if ch == 'x' {
+			i++
+		} else if ch == '\n' {
+			result = append(result, ln)
+			ln = make([]int, 3)
+			i = 0
+		} else {
+			ln[i] = ln[i]*10 + int(ch) - 48
 		}
-		split := strings.Split(line, "x")
-		l, _ := strconv.Atoi(split[0])
-		w, _ := strconv.Atoi(split[1])
-		h, _ := strconv.Atoi(split[2])
-		result = append(result, []int{l, w, h})
 	}
 	return result
 }
