@@ -12,12 +12,14 @@ import (
 	"github.com/polarfish/advent-of-code-go/year2015/day01"
 	"github.com/polarfish/advent-of-code-go/year2015/day02"
 	"github.com/polarfish/advent-of-code-go/year2015/day03"
+	"github.com/polarfish/advent-of-code-go/year2015/day04"
 )
 
 var allPuzzles = []*utils.Puzzle{
 	year2015day01.New(),
 	year2015day02.New(),
 	year2015day03.New(),
+	year2015day04.New(),
 }
 
 func main() {
@@ -34,7 +36,11 @@ func main() {
 	}
 
 	fd := int(os.Stdin.Fd())
-	syscall.SetNonblock(fd, true)
+	err := syscall.SetNonblock(fd, true)
+	if err != nil {
+		fmt.Println("Failed to set non-blocking mode")
+		os.Exit(1)
+	}
 	stdInputBytes, _ := io.ReadAll(os.Stdin)
 	stdInput := string(stdInputBytes)
 
