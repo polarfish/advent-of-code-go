@@ -2,10 +2,8 @@ package year2015day02
 
 import (
 	_ "embed"
-	"strconv"
-	"strings"
-
 	"github.com/polarfish/advent-of-code-go/utils"
+	"strconv"
 )
 
 //go:embed day02.txt
@@ -46,7 +44,7 @@ func Part2(input string) string {
 }
 
 func parseInput(input string) [][]int {
-	result := make([][]int, 0, strings.Count(input, "\n"))
+	result := make([][]int, 0, 1000)
 	ln := make([]int, 3)
 	i := 0
 	for _, ch := range input {
