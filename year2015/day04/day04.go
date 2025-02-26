@@ -3,7 +3,7 @@ package year2015day04
 import (
 	"crypto/md5"
 	_ "embed"
-	"io"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -12,6 +12,8 @@ import (
 
 //go:embed day04.txt
 var input string
+
+const maxIterations = 100_000_000
 
 func New() *utils.Puzzle {
 	return &utils.Puzzle{
@@ -25,44 +27,26 @@ func New() *utils.Puzzle {
 }
 
 func Part1(input string) string {
-	res, err := solve(input, func(result []byte) bool {
+	return solve(input, func(result [16]byte) bool {
 		return result[0] == 0 && result[1] == 0 && result[2] < 16
 	})
-	if err != nil {
-		return utils.ERR
-	}
-	return res
 }
 
 func Part2(input string) string {
-	res, err := solve(input, func(result []byte) bool {
+	return solve(input, func(result [16]byte) bool {
 		return result[0] == 0 && result[1] == 0 && result[2] == 0
 	})
-	if err != nil {
-		return utils.ERR
-	}
-	return res
 }
 
-func solve(input string, predicate func([]byte) bool) (string, error) {
-	input = strings.TrimSpace(input)
-	h := md5.New()
-	var result []byte
-	for i := 1; i < 100_000_000; i++ {
-		h.Reset()
-		_, err1 := io.WriteString(h, input)
-		if err1 != nil {
-			return utils.ERR, nil
-		}
-		_, err2 := io.WriteString(h, strconv.Itoa(i))
-		if err2 != nil {
-			return utils.ERR, nil
-		}
-		result = h.Sum(nil)
+func solve(input string, predicate func([16]byte) bool) string {
+	inputBytes := []byte(strings.TrimSpace(input))
 
+	var result [16]byte
+	for i := 1; i < maxIterations; i++ {
+		result = md5.Sum(slices.Concat(inputBytes, []byte(strconv.Itoa(i))))
 		if predicate(result) {
-			return strconv.Itoa(i), nil
+			return strconv.Itoa(i)
 		}
 	}
-	return utils.ERR, nil
+	return utils.ERR
 }
