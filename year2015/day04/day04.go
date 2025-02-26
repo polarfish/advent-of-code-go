@@ -3,7 +3,6 @@ package year2015day04
 import (
 	"crypto/md5"
 	_ "embed"
-	"slices"
 	"strconv"
 	"strings"
 
@@ -38,13 +37,13 @@ func Part2(input string) string {
 	})
 }
 
-func solve(input string, predicate func([16]byte) bool) string {
+func solve(input string, test func([16]byte) bool) string {
 	inputBytes := []byte(strings.TrimSpace(input))
 
-	var result [16]byte
+	var res [16]byte
 	for i := 1; i < maxIterations; i++ {
-		result = md5.Sum(slices.Concat(inputBytes, []byte(strconv.Itoa(i))))
-		if predicate(result) {
+		res = md5.Sum(append(inputBytes, []byte(strconv.Itoa(i))...))
+		if test(res) {
 			return strconv.Itoa(i)
 		}
 	}
