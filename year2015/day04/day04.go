@@ -38,11 +38,25 @@ func Part2(input string) string {
 }
 
 func solve(input string, test func([16]byte) bool) string {
-	inputBytes := []byte(strings.TrimSpace(input))
-
+	inputBytes := append([]byte(strings.TrimSpace(input)), 0)
+	threshold := 10
+	var l = len(inputBytes) - 1
+	var j, k int
 	var res [16]byte
 	for i := 1; i < maxIterations; i++ {
-		res = md5.Sum(append(inputBytes, []byte(strconv.Itoa(i))...))
+		if i >= threshold {
+			l++
+			threshold *= 10
+			inputBytes = append(inputBytes, 0)
+		}
+		j, k = i, l
+		for j > 0 {
+			inputBytes[k] = byte(j%10) + 48
+			k -= 1
+			j /= 10
+		}
+
+		res = md5.Sum(inputBytes)
 		if test(res) {
 			return strconv.Itoa(i)
 		}
