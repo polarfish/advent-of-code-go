@@ -9,15 +9,15 @@ import (
 //go:embed day02.txt
 var input string
 
-func New() *utils.Puzzle {
-	return &utils.Puzzle{
+func init() {
+	utils.RegisterPuzzle(&utils.Puzzle{
 		Year:  2015,
 		Day:   2,
 		Name:  "I Was Told There Would Be No Math",
 		Input: input,
 		Part1: Part1,
 		Part2: Part2,
-	}
+	})
 }
 
 func Part1(input string) string {

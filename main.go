@@ -1,28 +1,20 @@
 package main
 
 import (
+	"github.com/polarfish/advent-of-code-go/utils"
+	_ "github.com/polarfish/advent-of-code-go/year2015/day01"
+	_ "github.com/polarfish/advent-of-code-go/year2015/day02"
+	_ "github.com/polarfish/advent-of-code-go/year2015/day03"
+	_ "github.com/polarfish/advent-of-code-go/year2015/day04"
+	_ "github.com/polarfish/advent-of-code-go/year2015/day05"
+
 	"fmt"
 	"io"
 	"os"
 	"strconv"
 	"syscall"
 	"time"
-
-	"github.com/polarfish/advent-of-code-go/utils"
-	"github.com/polarfish/advent-of-code-go/year2015/day01"
-	"github.com/polarfish/advent-of-code-go/year2015/day02"
-	"github.com/polarfish/advent-of-code-go/year2015/day03"
-	"github.com/polarfish/advent-of-code-go/year2015/day04"
-	"github.com/polarfish/advent-of-code-go/year2015/day05"
 )
-
-var allPuzzles = []*utils.Puzzle{
-	year2015day01.New(),
-	year2015day02.New(),
-	year2015day03.New(),
-	year2015day04.New(),
-	year2015day05.New(),
-}
 
 func main() {
 	args := os.Args[1:]
@@ -47,7 +39,7 @@ func main() {
 	stdInput := string(stdInputBytes)
 
 	var puzzles []*utils.Puzzle
-	for _, p := range allPuzzles {
+	for _, p := range utils.GetAllPuzzles() {
 		if (day == 0 || day == p.Day) && (year == 0 || year == p.Year) {
 			puzzles = append(puzzles, p)
 		}

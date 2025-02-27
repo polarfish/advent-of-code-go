@@ -14,15 +14,15 @@ var input string
 
 const maxIterations = 100_000_000
 
-func New() *utils.Puzzle {
-	return &utils.Puzzle{
+func init() {
+	utils.RegisterPuzzle(&utils.Puzzle{
 		Year:  2015,
 		Day:   4,
 		Name:  "The Ideal Stocking Stuffer",
 		Input: input,
 		Part1: Part1,
 		Part2: Part2,
-	}
+	})
 }
 
 func Part1(input string) string {
