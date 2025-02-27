@@ -13,6 +13,7 @@ import (
 	"github.com/polarfish/advent-of-code-go/year2015/day02"
 	"github.com/polarfish/advent-of-code-go/year2015/day03"
 	"github.com/polarfish/advent-of-code-go/year2015/day04"
+	"github.com/polarfish/advent-of-code-go/year2015/day05"
 )
 
 var allPuzzles = []*utils.Puzzle{
@@ -20,6 +21,7 @@ var allPuzzles = []*utils.Puzzle{
 	year2015day02.New(),
 	year2015day03.New(),
 	year2015day04.New(),
+	year2015day05.New(),
 }
 
 func main() {
