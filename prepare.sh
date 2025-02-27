@@ -55,7 +55,11 @@ SOLUTION_PATH="$OUTPUT_DIR/day${DAY_PADDED}.go"
 if [ -e "$SOLUTION_PATH" ]; then
   echo "Skip creating $SOLUTION_PATH (file exists)"
 else
-  PUZZLE_TITLE=$(curl -s "$BASE_URL" | sed -n 's/.*--- Day [0-9]\{1,2\}: \(.*\) ---.*/\1/p')
+  SED_EXTRACT='s/.*--- Day [0-9]\{1,2\}: \(.*\) ---.*/\1/p'
+  SED_HTML_UNESCAPE='s/&nbsp;/ /g; s/&amp;/\&/g; s/&lt;/\</g; s/&gt;/\>/g; s/&quot;/\"/g; s/&apos;/\'"'"'/g; s/&ldquo;/\"/g; s/&rdquo;/\"/g;'
+  PUZZLE_TITLE=$(curl -s "$BASE_URL" | sed -n "$SED_EXTRACT" | sed "$SED_HTML_UNESCAPE")
+
+  #PUZZLE_TITLE=$(curl -s "$BASE_URL" | sed -n 's/.*--- Day [0-9]\{1,2\}: \(.*\) ---.*/\1/p' | sed 's/&nbsp;/ /g; s/&amp;/\&/g; s/&lt;/\</g; s/&gt;/\>/g; s/&quot;/\"/g; s/&apos;/\'"'"'/g; s/&ldquo;/\"/g; s/&rdquo;/\"/g;')
 
   # Creating the solution stub
 echo "package year${YEAR}day${DAY_PADDED}
