@@ -1,11 +1,11 @@
-package utils
+package puzzles
 
 import (
-	"fmt"
 	"time"
 )
 
-const ERR string = "error"
+const errorResult string = "error"
+const notApplicableResult string = "n/a"
 
 type Puzzle struct {
 	Day   int
@@ -26,14 +26,17 @@ type Result struct {
 
 var allPuzzles []*Puzzle
 
-func RegisterPuzzle(p *Puzzle) {
-	allPuzzles = append(allPuzzles, p)
+func addPuzzle(year int, day int, name string, input string, part1 func(string) string, part2 func(string) string) {
+	allPuzzles = append(allPuzzles, &Puzzle{
+		Year:  year,
+		Day:   day,
+		Name:  name,
+		Input: input,
+		Part1: part1,
+		Part2: part2,
+	})
 }
 
 func GetAllPuzzles() []*Puzzle {
 	return allPuzzles
-}
-
-func FormatDuration(d time.Duration) string {
-	return fmt.Sprintf("[%d.%03d ms]", d.Microseconds()/1000, d.Microseconds()%1000)
 }

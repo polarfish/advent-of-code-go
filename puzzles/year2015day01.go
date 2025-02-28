@@ -1,27 +1,18 @@
-package year2015day01
+package puzzles
 
 import (
 	_ "embed"
 	"strconv"
-
-	"github.com/polarfish/advent-of-code-go/utils"
 )
 
-//go:embed day01.txt
-var input string
+//go:embed year2015day01.txt
+var year2015Day01Input string
 
 func init() {
-	utils.RegisterPuzzle(&utils.Puzzle{
-		Year:  2015,
-		Day:   1,
-		Name:  "Not Quite Lisp",
-		Input: input,
-		Part1: Part1,
-		Part2: Part2,
-	})
+	addPuzzle(2015, 1, "Not Quite Lisp", year2015Day01Input, year2015Day01Part1, year2015Day01Part2)
 }
 
-func Part1(input string) string {
+func year2015Day01Part1(input string) string {
 	floor := 0
 	for _, ch := range input {
 		if ch == '(' {
@@ -33,7 +24,7 @@ func Part1(input string) string {
 	return strconv.Itoa(floor)
 }
 
-func Part2(input string) string {
+func year2015Day01Part2(input string) string {
 	floor := 0
 	for i, ch := range input {
 		if ch == '(' {
@@ -46,5 +37,5 @@ func Part2(input string) string {
 			return strconv.Itoa(i + 1)
 		}
 	}
-	return utils.ERR
+	return errorResult
 }

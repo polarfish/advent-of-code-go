@@ -1,27 +1,18 @@
-package year2015day03
+package puzzles
 
 import (
 	_ "embed"
 	"strconv"
-
-	"github.com/polarfish/advent-of-code-go/utils"
 )
 
-//go:embed day03.txt
-var input string
+//go:embed year2015day03.txt
+var year2015Day03Input string
 
 func init() {
-	utils.RegisterPuzzle(&utils.Puzzle{
-		Year:  2015,
-		Day:   3,
-		Name:  "Perfectly Spherical Houses in a Vacuum",
-		Input: input,
-		Part1: Part1,
-		Part2: Part2,
-	})
+	addPuzzle(2015, 3, "Perfectly Spherical Houses in a Vacuum", year2015Day03Input, year2015Day03Part1, year2015Day03Part2)
 }
 
-func Part1(input string) string {
+func year2015Day03Part1(input string) string {
 	x, y := 1<<15, 1<<15
 	m := make(map[int]int, len(input)/2)
 	m[(y<<16)|x] = 1
@@ -42,7 +33,7 @@ func Part1(input string) string {
 	return strconv.Itoa(len(m))
 }
 
-func Part2(input string) string {
+func year2015Day03Part2(input string) string {
 	coords := [4]int{1 << 15, 1 << 15, 1 << 15, 1 << 15} // 0, 1 - Santa; 2, 3 - Robo-Santa
 	m := make(map[int]int, len(input)/2)
 	m[(coords[0]<<16)|coords[1]] = 1

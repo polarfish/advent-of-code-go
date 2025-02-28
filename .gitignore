@@ -25,7 +25,7 @@ go.work.sum
 .env
 
 # puzzle input files
-day*.txt
+year*.txt
 
 # resulting binary
 advent-of-code-go

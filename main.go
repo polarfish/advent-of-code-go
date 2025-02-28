@@ -1,12 +1,7 @@
 package main
 
 import (
-	"github.com/polarfish/advent-of-code-go/utils"
-	_ "github.com/polarfish/advent-of-code-go/year2015/day01"
-	_ "github.com/polarfish/advent-of-code-go/year2015/day02"
-	_ "github.com/polarfish/advent-of-code-go/year2015/day03"
-	_ "github.com/polarfish/advent-of-code-go/year2015/day04"
-	_ "github.com/polarfish/advent-of-code-go/year2015/day05"
+	"github.com/polarfish/advent-of-code-go/puzzles"
 
 	"fmt"
 	"io"
@@ -38,26 +33,26 @@ func main() {
 	stdInputBytes, _ := io.ReadAll(os.Stdin)
 	stdInput := string(stdInputBytes)
 
-	var puzzles []*utils.Puzzle
-	for _, p := range utils.GetAllPuzzles() {
+	var puzzlesToRun []*puzzles.Puzzle
+	for _, p := range puzzles.GetAllPuzzles() {
 		if (day == 0 || day == p.Day) && (year == 0 || year == p.Year) {
-			puzzles = append(puzzles, p)
+			puzzlesToRun = append(puzzlesToRun, p)
 		}
 	}
 
-	if len(puzzles) == 0 {
+	if len(puzzlesToRun) == 0 {
 		fmt.Println("Not found")
 		os.Exit(0)
 	}
 
 	var start, totalStart time.Time
 	var totalElapsed time.Duration
-	results := make([]*utils.Result, len(puzzles))
+	results := make([]*puzzles.Result, len(puzzlesToRun))
 
 	// run
 	totalStart = time.Now()
-	for i, p := range puzzles {
-		result := utils.Result{Puzzle: p}
+	for i, p := range puzzlesToRun {
+		result := puzzles.Result{Puzzle: p}
 
 		var input string
 		if len(stdInput) > 0 {
@@ -81,13 +76,17 @@ func main() {
 	// report
 	for _, r := range results {
 		fmt.Printf("--- %d Day %d: %s ---\n", r.Puzzle.Year, r.Puzzle.Day, r.Puzzle.Name)
-		fmt.Println(utils.FormatDuration(r.Duration1), "Part 1:", r.Result1)
-		fmt.Println(utils.FormatDuration(r.Duration2), "Part 2:", r.Result2)
+		fmt.Println(formatDuration(r.Duration1), "Part 1:", r.Result1)
+		fmt.Println(formatDuration(r.Duration2), "Part 2:", r.Result2)
 		fmt.Println()
 	}
 
-	if len(puzzles) > 1 {
+	if len(puzzlesToRun) > 1 {
 		fmt.Println("=== Total ===")
-		fmt.Println(utils.FormatDuration(totalElapsed))
+		fmt.Println(formatDuration(totalElapsed))
 	}
+}
+
+func formatDuration(d time.Duration) string {
+	return fmt.Sprintf("[%d.%03d ms]", d.Microseconds()/1000, d.Microseconds()%1000)
 }

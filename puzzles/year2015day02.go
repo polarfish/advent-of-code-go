@@ -1,26 +1,18 @@
-package year2015day02
+package puzzles
 
 import (
 	_ "embed"
-	"github.com/polarfish/advent-of-code-go/utils"
 	"strconv"
 )
 
-//go:embed day02.txt
-var input string
+//go:embed year2015day02.txt
+var year2015Day02Input string
 
 func init() {
-	utils.RegisterPuzzle(&utils.Puzzle{
-		Year:  2015,
-		Day:   2,
-		Name:  "I Was Told There Would Be No Math",
-		Input: input,
-		Part1: Part1,
-		Part2: Part2,
-	})
+	addPuzzle(2015, 2, "I Was Told There Would Be No Math", year2015Day02Input, year2015Day02Part1, year2015Day02Part2)
 }
 
-func Part1(input string) string {
+func year2015Day02Part1(input string) string {
 	dimensions := parseInput(input)
 	var result int
 	for _, d := range dimensions {
@@ -33,7 +25,7 @@ func Part1(input string) string {
 	return strconv.Itoa(result)
 }
 
-func Part2(input string) string {
+func year2015Day02Part2(input string) string {
 	dimensions := parseInput(input)
 	var result int
 	for _, d := range dimensions {

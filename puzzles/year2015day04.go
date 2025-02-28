@@ -1,37 +1,28 @@
-package year2015day04
+package puzzles
 
 import (
 	"crypto/md5"
 	_ "embed"
 	"strconv"
 	"strings"
-
-	"github.com/polarfish/advent-of-code-go/utils"
 )
 
-//go:embed day04.txt
-var input string
+//go:embed year2015day04.txt
+var year2015Day04Input string
 
 const maxIterations = 100_000_000
 
 func init() {
-	utils.RegisterPuzzle(&utils.Puzzle{
-		Year:  2015,
-		Day:   4,
-		Name:  "The Ideal Stocking Stuffer",
-		Input: input,
-		Part1: Part1,
-		Part2: Part2,
-	})
+	addPuzzle(2015, 4, "The Ideal Stocking Stuffer", year2015Day04Input, year2015Day04Part1, year2015Day04Part2)
 }
 
-func Part1(input string) string {
+func year2015Day04Part1(input string) string {
 	return solve(input, func(result [16]byte) bool {
 		return result[0] == 0 && result[1] == 0 && result[2] < 16
 	})
 }
 
-func Part2(input string) string {
+func year2015Day04Part2(input string) string {
 	return solve(input, func(result [16]byte) bool {
 		return result[0] == 0 && result[1] == 0 && result[2] == 0
 	})
@@ -61,5 +52,5 @@ func solve(input string, test func([16]byte) bool) string {
 			return strconv.Itoa(i)
 		}
 	}
-	return utils.ERR
+	return errorResult
 }
