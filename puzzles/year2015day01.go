@@ -9,6 +9,7 @@ import (
 var year2015Day01Input string
 
 func init() {
+	// https://adventofcode.com/2015/day/1
 	addPuzzle(2015, 1, "Not Quite Lisp", year2015Day01Input, year2015Day01Part1, year2015Day01Part2)
 }
 

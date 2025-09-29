@@ -10,6 +10,7 @@ import (
 var year2015Day05Input string
 
 func init() {
+	// https://adventofcode.com/2015/day/5
 	addPuzzle(2015, 5, "Doesn't He Have Intern-Elves For This?", year2015Day05Input, year2015Day05Part1, year2015Day05Part2)
 }
 

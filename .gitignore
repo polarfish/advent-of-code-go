@@ -29,3 +29,7 @@ year*.txt
 
 # resulting binary
 advent-of-code-go
+
+# jetbrains
+.idea
+*.iml

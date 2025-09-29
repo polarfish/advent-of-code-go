@@ -9,6 +9,7 @@ import (
 var year2015Day03Input string
 
 func init() {
+	// https://adventofcode.com/2015/day/3
 	addPuzzle(2015, 3, "Perfectly Spherical Houses in a Vacuum", year2015Day03Input, year2015Day03Part1, year2015Day03Part2)
 }
 

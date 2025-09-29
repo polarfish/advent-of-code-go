@@ -13,6 +13,7 @@ var year2015Day04Input string
 const maxIterations = 100_000_000
 
 func init() {
+	// https://adventofcode.com/2015/day/4
 	addPuzzle(2015, 4, "The Ideal Stocking Stuffer", year2015Day04Input, year2015Day04Part1, year2015Day04Part2)
 }
 

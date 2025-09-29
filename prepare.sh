@@ -31,18 +31,20 @@ DAY_PADDED=$(printf "%02d" "$DAY")
 echo "Preparing year $YEAR day $DAY"
 
 # Create output directory
-OUTPUT_DIR="year$YEAR/day$DAY_PADDED"
+OUTPUT_DIR="puzzles"
 mkdir -p $OUTPUT_DIR
 
-INPUT_PATH="$OUTPUT_DIR/day${DAY_PADDED}.txt"
+PUZZLE_FILE_NAME_BASE="year${YEAR}day${DAY_PADDED}"
+
+INPUT_PATH="${OUTPUT_DIR}/${PUZZLE_FILE_NAME_BASE}.txt"
 
 # Check for the existing input file
 if [ -e "$INPUT_PATH" ]; then
   echo "Skip creating $INPUT_PATH (file exists)"
 else
   # Download the input
-  curl -s -H "Cookie: session=$SESSION" "https://adventofcode.com/$YEAR/day/$DAY/input" -o "$INPUT_PATH"
-  if [[ $? -eq 0 ]]; then
+  if curl -s -H "Cookie: session=$SESSION" "https://adventofcode.com/$YEAR/day/$DAY/input" -o "$INPUT_PATH"
+  then
     echo "Created $INPUT_PATH"
   else
     echo "Failed to create $INPUT_PATH"
@@ -50,7 +52,7 @@ else
   fi
 fi
 
-SOLUTION_PATH="$OUTPUT_DIR/day${DAY_PADDED}.go"
+SOLUTION_PATH="$OUTPUT_DIR/${PUZZLE_FILE_NAME_BASE}.go"
 # Check for the existing solution file
 if [ -e "$SOLUTION_PATH" ]; then
   echo "Skip creating $SOLUTION_PATH (file exists)"
@@ -59,16 +61,12 @@ else
   SED_HTML_UNESCAPE='s/&nbsp;/ /g; s/&amp;/\&/g; s/&lt;/\</g; s/&gt;/\>/g; s/&quot;/\"/g; s/&apos;/\'"'"'/g; s/&ldquo;/\"/g; s/&rdquo;/\"/g;'
   PUZZLE_TITLE=$(curl -s "$BASE_URL" | sed -n "$SED_EXTRACT" | sed "$SED_HTML_UNESCAPE")
 
-  #PUZZLE_TITLE=$(curl -s "$BASE_URL" | sed -n 's/.*--- Day [0-9]\{1,2\}: \(.*\) ---.*/\1/p' | sed 's/&nbsp;/ /g; s/&amp;/\&/g; s/&lt;/\</g; s/&gt;/\>/g; s/&quot;/\"/g; s/&apos;/\'"'"'/g; s/&ldquo;/\"/g; s/&rdquo;/\"/g;')
-
   # Creating the solution stub
-echo "package year${YEAR}day${DAY_PADDED}
+echo "package ${OUTPUT_DIR}
 
 import (
 	_ \"embed\"
 	\"strconv\"
-
-	\"github.com/polarfish/advent-of-code-go/utils\"
 )
 
 //go:embed day${DAY_PADDED}.txt
@@ -91,7 +89,7 @@ func Part1(input string) string {
 
 func Part2(input string) string {
 	return strconv.Itoa(0)
-}" > $SOLUTION_PATH
+}" > "$SOLUTION_PATH"
 
   if [[ $? -eq 0 ]]; then
     echo "Created $SOLUTION_PATH"
@@ -101,7 +99,7 @@ func Part2(input string) string {
   fi
 fi
 
-TESTS_PATH="$OUTPUT_DIR/day${DAY_PADDED}_test.go"
+TESTS_PATH="$OUTPUT_DIR/${PUZZLE_FILE_NAME_BASE}_test.go"
 # Check for the existing tests file
 if [ -e "$TESTS_PATH" ]; then
   echo "Skip creating $TESTS_PATH (file exists)"
@@ -129,7 +127,7 @@ func TestPart2(t *testing.T) {
     t.Errorf(\"Part2: \ngot %s\nwant %s\", got, want)
   }
 }
-" > $TESTS_PATH
+" > "$TESTS_PATH"
 
   if [[ $? -eq 0 ]]; then
     echo "Created $TESTS_PATH"

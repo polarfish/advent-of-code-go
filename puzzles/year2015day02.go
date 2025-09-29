@@ -9,6 +9,7 @@ import (
 var year2015Day02Input string
 
 func init() {
+	// https://adventofcode.com/2015/day/2
 	addPuzzle(2015, 2, "I Was Told There Would Be No Math", year2015Day02Input, year2015Day02Part1, year2015Day02Part2)
 }
 
