@@ -34,9 +34,11 @@ echo "Preparing year $YEAR day $DAY"
 OUTPUT_DIR="puzzles"
 mkdir -p $OUTPUT_DIR
 
-PUZZLE_FILE_NAME_BASE="year${YEAR}day${DAY_PADDED}"
+PUZZLE_BASE_LOWERCASE="year${YEAR}day${DAY_PADDED}"
+PUZZLE_BASE_CAMELCASE="year${YEAR}Day${DAY_PADDED}"
+PUZZLE_BASE_PASCALCASE="Year${YEAR}Day${DAY_PADDED}"
 
-INPUT_PATH="${OUTPUT_DIR}/${PUZZLE_FILE_NAME_BASE}.txt"
+INPUT_PATH="${OUTPUT_DIR}/${PUZZLE_BASE_LOWERCASE}.txt"
 
 # Check for the existing input file
 if [ -e "$INPUT_PATH" ]; then
@@ -52,7 +54,7 @@ else
   fi
 fi
 
-SOLUTION_PATH="$OUTPUT_DIR/${PUZZLE_FILE_NAME_BASE}.go"
+SOLUTION_PATH="$OUTPUT_DIR/${PUZZLE_BASE_LOWERCASE}.go"
 # Check for the existing solution file
 if [ -e "$SOLUTION_PATH" ]; then
   echo "Skip creating $SOLUTION_PATH (file exists)"
@@ -62,32 +64,26 @@ else
   PUZZLE_TITLE=$(curl -s "$BASE_URL" | sed -n "$SED_EXTRACT" | sed "$SED_HTML_UNESCAPE")
 
   # Creating the solution stub
-echo "package ${OUTPUT_DIR}
+  echo "package ${OUTPUT_DIR}
 
 import (
 	_ \"embed\"
 	\"strconv\"
 )
 
-//go:embed day${DAY_PADDED}.txt
-var input string
+//go:embed ${PUZZLE_BASE_LOWERCASE}.txt
+var year${YEAR}Day${DAY_PADDED}Input string
 
-func New() *utils.Puzzle {
-	return &utils.Puzzle{
-		Year:  ${YEAR},
-		Day:   ${DAY},
-		Name:  \"${PUZZLE_TITLE}\",
-		Input: input,
-		Part1: Part1,
-		Part2: Part2,
-	}
+func init() {
+	// https://adventofcode.com/${YEAR}/day/${DAY}
+	addPuzzle(${YEAR}, ${DAY}, \"${PUZZLE_TITLE}\", ${PUZZLE_BASE_CAMELCASE}Input, ${PUZZLE_BASE_CAMELCASE}Part1, ${PUZZLE_BASE_CAMELCASE}Part2)
 }
 
-func Part1(input string) string {
+func ${PUZZLE_BASE_CAMELCASE}Part1(input string) string {
 	return strconv.Itoa(0)
 }
 
-func Part2(input string) string {
+func ${PUZZLE_BASE_CAMELCASE}Part2(input string) string {
 	return strconv.Itoa(0)
 }" > "$SOLUTION_PATH"
 
@@ -99,35 +95,28 @@ func Part2(input string) string {
   fi
 fi
 
-TESTS_PATH="$OUTPUT_DIR/${PUZZLE_FILE_NAME_BASE}_test.go"
+TESTS_PATH="$OUTPUT_DIR/${PUZZLE_BASE_LOWERCASE}_test.go"
 # Check for the existing tests file
 if [ -e "$TESTS_PATH" ]; then
   echo "Skip creating $TESTS_PATH (file exists)"
 else
 
   # Creating the tests stub
-echo "package year${YEAR}day${DAY_PADDED}
+  echo "package ${OUTPUT_DIR}
 
 import \"testing\"
 
-func TestPart1(t *testing.T) {
-  got := Part1(input)
-  t.Log(\"Part 1:\", got)
-  want := \"0\"
-  if got != want {
-    t.Errorf(\"Part1: \ngot %s\nwant %s\", got, want)
-  }
+func Test${PUZZLE_BASE_PASCALCASE}Part1(t *testing.T) {
+	runTests(t, ${PUZZLE_BASE_CAMELCASE}Part1, map[string]testCase{
+		\"input\": {${PUZZLE_BASE_CAMELCASE}Input, \"0\"},
+	})
 }
 
-func TestPart2(t *testing.T) {
-  got := Part2(input)
-  t.Log(\"Part 2:\", got)
-  want := \"0\"
-  if got != want {
-    t.Errorf(\"Part2: \ngot %s\nwant %s\", got, want)
-  }
-}
-" > "$TESTS_PATH"
+func Test${PUZZLE_BASE_PASCALCASE}Part2(t *testing.T) {
+	runTests(t, ${PUZZLE_BASE_CAMELCASE}Part2, map[string]testCase{
+		\"input\": {${PUZZLE_BASE_CAMELCASE}Input, \"0\"},
+	})
+}" > "$TESTS_PATH"
 
   if [[ $? -eq 0 ]]; then
     echo "Created $TESTS_PATH"
