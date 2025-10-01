@@ -16,23 +16,23 @@ func init() {
 
 func year2015Day06Part1(input string) string {
 	return simulateLights(input,
-		func(i int) int { return 1 },
-		func(i int) int { return 0 },
-		func(i int) int { return i ^ 1 })
+		func(i uint8) uint8 { return 1 },
+		func(i uint8) uint8 { return 0 },
+		func(i uint8) uint8 { return i ^ 1 })
 }
 
 func year2015Day06Part2(input string) string {
 	return simulateLights(input,
-		func(i int) int { return i + 1 },
-		func(i int) int { return max(0, i-1) },
-		func(i int) int { return i + 2 })
+		func(i uint8) uint8 { return i + 1 },
+		func(i uint8) uint8 { return max(0, i-1) },
+		func(i uint8) uint8 { return i + 2 })
 }
 
-func simulateLights(input string, turnOn func(i int) int, turnOff func(i int) int, toggle func(i int) int) string {
+func simulateLights(input string, turnOn func(i uint8) uint8, turnOff func(i uint8) uint8, toggle func(i uint8) uint8) string {
 	const size = 1000
-	matrix := make([][]int, size)
+	matrix := make([][]uint8, size)
 	for i := 0; i < size; i++ {
-		matrix[i] = make([]int, size)
+		matrix[i] = make([]uint8, size)
 	}
 
 	lines := strings.Split(input, "\n")
@@ -44,7 +44,7 @@ func simulateLights(input string, turnOn func(i int) int, turnOff func(i int) in
 		split := strings.Split(line, " ")
 		var from, to []string
 		var x1, y1, x2, y2 int
-		var op func(int) int
+		var op func(uint8) uint8
 		if split[1] == "off" {
 			op = turnOff
 			from = strings.Split(split[2], ",")
@@ -74,7 +74,7 @@ func simulateLights(input string, turnOn func(i int) int, turnOff func(i int) in
 	result := 0
 	for j := 0; j < size; j++ {
 		for i := 0; i < size; i++ {
-			result += matrix[j][i]
+			result += int(matrix[j][i])
 		}
 	}
 
