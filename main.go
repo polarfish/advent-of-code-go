@@ -8,10 +8,8 @@ import (
 	"github.com/polarfish/advent-of-code-go/puzzles/utils"
 
 	"fmt"
-	"io"
 	"os"
 	"strconv"
-	"syscall"
 	"time"
 )
 
@@ -27,14 +25,6 @@ func main() {
 	if len(args) > 1 {
 		day, _ = strconv.Atoi(args[1])
 	}
-
-	fd := int(os.Stdin.Fd())
-	if err := syscall.SetNonblock(fd, true); err != nil {
-		fmt.Println("Failed to set non-blocking mode")
-		os.Exit(1)
-	}
-	stdInputBytes, _ := io.ReadAll(os.Stdin)
-	stdInput := string(stdInputBytes)
 
 	var puzzlesToRun []*utils.Puzzle
 	for _, p := range registry.GetAllPuzzles() {
@@ -63,11 +53,7 @@ func main() {
 	// run
 	totalStart = time.Now()
 	for i, puzzle := range puzzlesToRun {
-		if stdInput != "" {
-			results[i] = puzzle.Run(stdInput)
-		} else {
-			results[i] = puzzle.Run(puzzle.Input)
-		}
+		results[i] = puzzle.Run()
 	}
 	totalElapsed = time.Since(totalStart)
 

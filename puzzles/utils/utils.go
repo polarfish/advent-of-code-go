@@ -24,15 +24,15 @@ type Result struct {
 	Duration2 time.Duration
 }
 
-func (p Puzzle) Run(input string) Result {
+func (p Puzzle) Run() Result {
 	result := Result{Puzzle: &p}
 
 	start1 := time.Now()
-	result.Result1 = runSafe(p.Part1, input)
+	result.Result1 = runSafe(p.Part1, p.Input)
 	result.Duration1 = time.Since(start1)
 
 	start2 := time.Now()
-	result.Result2 = runSafe(p.Part2, input)
+	result.Result2 = runSafe(p.Part2, p.Input)
 	result.Duration2 = time.Since(start2)
 
 	return result
