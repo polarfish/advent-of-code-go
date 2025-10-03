@@ -1,20 +1,22 @@
-package puzzles
+package year2015day05
 
 import (
 	_ "embed"
 	"strconv"
 	"strings"
+
+	"github.com/polarfish/advent-of-code-go/puzzles/registry"
 )
 
 //go:embed year2015day05.txt
-var year2015Day05Input string
+var input string
 
 func init() {
 	// https://adventofcode.com/2015/day/5
-	addPuzzle(2015, 5, "Doesn't He Have Intern-Elves For This?", year2015Day05Input, year2015Day05Part1, year2015Day05Part2)
+	registry.AddPuzzle(2015, 5, "Doesn't He Have Intern-Elves For This?", input, part1, part2)
 }
 
-func year2015Day05Part1(input string) string {
+func part1(input string) string {
 	var result int
 	lines := strings.Split(input, "\n")
 top:
@@ -44,7 +46,7 @@ top:
 	return strconv.Itoa(result)
 }
 
-func year2015Day05Part2(input string) string {
+func part2(input string) string {
 	var result int
 	lines := strings.Split(input, "\n")
 	for _, line := range lines {

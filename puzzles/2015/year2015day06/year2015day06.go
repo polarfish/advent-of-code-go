@@ -1,38 +1,40 @@
-package puzzles
+package year2015day06
 
 import (
 	_ "embed"
 	"strconv"
 	"strings"
+
+	"github.com/polarfish/advent-of-code-go/puzzles/registry"
 )
 
 //go:embed year2015day06.txt
-var year2015Day06Input string
+var input string
 
 func init() {
 	// https://adventofcode.com/2015/day/6
-	addPuzzle(2015, 6, "Probably a Fire Hazard", year2015Day06Input, year2015Day06Part1, year2015Day06Part2)
+	registry.AddPuzzle(2015, 6, "Probably a Fire Hazard", input, part1, part2)
 }
 
-func year2015Day06Part1(input string) string {
+func part1(input string) string {
 	return simulateLights(input,
-		func(i uint8) uint8 { return 1 },
-		func(i uint8) uint8 { return 0 },
-		func(i uint8) uint8 { return i ^ 1 })
+		func(i int8) int8 { return 1 },
+		func(i int8) int8 { return 0 },
+		func(i int8) int8 { return i ^ 1 })
 }
 
-func year2015Day06Part2(input string) string {
+func part2(input string) string {
 	return simulateLights(input,
-		func(i uint8) uint8 { return i + 1 },
-		func(i uint8) uint8 { return max(0, i-1) },
-		func(i uint8) uint8 { return i + 2 })
+		func(i int8) int8 { return i + 1 },
+		func(i int8) int8 { return max(0, i-1) },
+		func(i int8) int8 { return i + 2 })
 }
 
-func simulateLights(input string, turnOn func(i uint8) uint8, turnOff func(i uint8) uint8, toggle func(i uint8) uint8) string {
+func simulateLights(input string, turnOn func(i int8) int8, turnOff func(i int8) int8, toggle func(i int8) int8) string {
 	const size = 1000
-	matrix := make([][]uint8, size)
+	matrix := make([][]int8, size)
 	for i := 0; i < size; i++ {
-		matrix[i] = make([]uint8, size)
+		matrix[i] = make([]int8, size)
 	}
 
 	lines := strings.Split(input, "\n")
@@ -44,7 +46,7 @@ func simulateLights(input string, turnOn func(i uint8) uint8, turnOff func(i uin
 		split := strings.Split(line, " ")
 		var from, to []string
 		var x1, y1, x2, y2 int
-		var op func(uint8) uint8
+		var op func(int8) int8
 		if split[1] == "off" {
 			op = turnOff
 			from = strings.Split(split[2], ",")

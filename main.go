@@ -1,7 +1,11 @@
 package main
 
 import (
-	"github.com/polarfish/advent-of-code-go/puzzles"
+	"sort"
+
+	_ "github.com/polarfish/advent-of-code-go/puzzles/loader"
+	"github.com/polarfish/advent-of-code-go/puzzles/registry"
+	"github.com/polarfish/advent-of-code-go/puzzles/utils"
 
 	"fmt"
 	"io"
@@ -25,16 +29,15 @@ func main() {
 	}
 
 	fd := int(os.Stdin.Fd())
-	err := syscall.SetNonblock(fd, true)
-	if err != nil {
+	if err := syscall.SetNonblock(fd, true); err != nil {
 		fmt.Println("Failed to set non-blocking mode")
 		os.Exit(1)
 	}
 	stdInputBytes, _ := io.ReadAll(os.Stdin)
 	stdInput := string(stdInputBytes)
 
-	var puzzlesToRun []*puzzles.Puzzle
-	for _, p := range puzzles.GetAllPuzzles() {
+	var puzzlesToRun []*utils.Puzzle
+	for _, p := range registry.GetAllPuzzles() {
 		if (day == 0 || day == p.Day) && (year == 0 || year == p.Year) {
 			puzzlesToRun = append(puzzlesToRun, p)
 		}
@@ -45,31 +48,26 @@ func main() {
 		os.Exit(0)
 	}
 
-	var start, totalStart time.Time
+	sort.Slice(puzzlesToRun, func(i, j int) bool {
+		if puzzlesToRun[i].Year != puzzlesToRun[j].Year {
+			return puzzlesToRun[i].Year < puzzlesToRun[j].Year
+		} else {
+			return puzzlesToRun[i].Day < puzzlesToRun[j].Day
+		}
+	})
+
+	var totalStart time.Time
 	var totalElapsed time.Duration
-	results := make([]*puzzles.Result, len(puzzlesToRun))
+	results := make([]utils.Result, len(puzzlesToRun))
 
 	// run
 	totalStart = time.Now()
-	for i, p := range puzzlesToRun {
-		result := puzzles.Result{Puzzle: p}
-
-		var input string
-		if len(stdInput) > 0 {
-			input = stdInput
+	for i, puzzle := range puzzlesToRun {
+		if stdInput != "" {
+			results[i] = puzzle.Run(stdInput)
 		} else {
-			input = p.Input
+			results[i] = puzzle.Run(puzzle.Input)
 		}
-
-		start = time.Now()
-		result.Result1 = p.Part1(input)
-		result.Duration1 = time.Since(start)
-
-		start = time.Now()
-		result.Result2 = p.Part2(input)
-		result.Duration2 = time.Since(start)
-
-		results[i] = &result
 	}
 	totalElapsed = time.Since(totalStart)
 

@@ -1,26 +1,28 @@
-package puzzles
+package year2015day07
 
 import (
 	_ "embed"
 	"strconv"
 	"strings"
+
+	"github.com/polarfish/advent-of-code-go/puzzles/registry"
 )
 
 //go:embed year2015day07.txt
-var year2015Day07Input string
+var input string
 
 func init() {
 	// https://adventofcode.com/2015/day/7
-	addPuzzle(2015, 7, "Some Assembly Required", year2015Day07Input, year2015Day07Part1, year2015Day07Part2)
+	registry.AddPuzzle(2015, 7, "Some Assembly Required", input, part1, part2)
 }
 
-func year2015Day07Part1(input string) string {
+func part1(input string) string {
 	gates, memo := prepareGates(input)
 	result := int(gateValue("a", gates, memo))
 	return strconv.Itoa(result)
 }
 
-func year2015Day07Part2(input string) string {
+func part2(input string) string {
 	gates, memo := prepareGates(input)
 	signalA := gateValue("a", gates, memo)
 	clear(memo)
