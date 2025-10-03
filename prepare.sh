@@ -1,127 +1,157 @@
 #!/bin/bash
 
-SESSION=$AOC_SESSION
-YEAR=$1
-DAY=$2
+function refresh_puzzle_loader() {
+  local loader_file_path="puzzles/loader/loader.go"
+  local puzzles_sub_packages; puzzles_sub_packages=$(find puzzles -mindepth 2 -maxdepth 2 | grep "year20" | sort)
 
-# Validate the year and the day are provided
-if [[ -z "$DAY" || -z "$YEAR" ]]; then
-  echo "Usage: $0 <year> <day>"
-  exit 1
-fi
+  echo "package loader" > "${loader_file_path}"
+  echo "" >> "${loader_file_path}"
+  echo "import (" >> "${loader_file_path}"
+  # shellcheck disable=SC2068
+  for sub_package in ${puzzles_sub_packages[@]}; do
+      echo "	_ \"github.com/polarfish/advent-of-code-go/${sub_package}\"" >> "${loader_file_path}"
+  done
+  echo ")" >> "${loader_file_path}"
 
-BASE_URL="https://adventofcode.com/$YEAR/day/$DAY"
+  echo "Refreshed puzzles/loader.go"
+}
 
-# Validate the year and the day are correct
-STATUS_CODE=$(curl -o /dev/null -s -w "%{http_code}" "$BASE_URL")
-if [ "$STATUS_CODE" -ne 200 ]; then
-  echo "Puzzle not found (year $YEAR day $DAY)"
-  exit 1
-fi
+function main() {
+  local session=$AOC_SESSION
+  local year=$1
+  local day=$2
+  local status_code
 
-# Validate session token is valid
-STATUS_CODE=$(curl -o /dev/null -s -H "Cookie: session=$SESSION" -w "%{http_code}" "$BASE_URL/input")
-if [ "$STATUS_CODE" -ne 200 ]; then
-  echo "Session token is missing or invalid (make sure to set AOC_SESSION environment variable with a valid token)"
-  exit 1
-fi
-
-DAY_PADDED=$(printf "%02d" "$DAY")
-
-echo "Preparing year $YEAR day $DAY"
-
-# Create output directory
-OUTPUT_DIR="puzzles"
-mkdir -p $OUTPUT_DIR
-
-PUZZLE_BASE_LOWERCASE="year${YEAR}day${DAY_PADDED}"
-PUZZLE_BASE_CAMELCASE="year${YEAR}Day${DAY_PADDED}"
-PUZZLE_BASE_PASCALCASE="Year${YEAR}Day${DAY_PADDED}"
-
-INPUT_PATH="${OUTPUT_DIR}/${PUZZLE_BASE_LOWERCASE}.txt"
-
-# Check for the existing input file
-if [ -e "$INPUT_PATH" ]; then
-  echo "Skip creating $INPUT_PATH (file exists)"
-else
-  # Download the input
-  if curl -s -H "Cookie: session=$SESSION" "https://adventofcode.com/$YEAR/day/$DAY/input" -o "$INPUT_PATH"
-  then
-    echo "Created $INPUT_PATH"
-  else
-    echo "Failed to create $INPUT_PATH"
+  # Validate the year and the day are provided
+  if [[ -z "$day" || -z "$year" ]]; then
+    echo "Usage: $0 <year> <day>"
     exit 1
   fi
-fi
 
-SOLUTION_PATH="$OUTPUT_DIR/${PUZZLE_BASE_LOWERCASE}.go"
-# Check for the existing solution file
-if [ -e "$SOLUTION_PATH" ]; then
-  echo "Skip creating $SOLUTION_PATH (file exists)"
-else
-  SED_EXTRACT='s/.*--- Day [0-9]\{1,2\}: \(.*\) ---.*/\1/p'
-  SED_HTML_UNESCAPE='s/&nbsp;/ /g; s/&amp;/\&/g; s/&lt;/\</g; s/&gt;/\>/g; s/&quot;/\"/g; s/&apos;/\'"'"'/g; s/&ldquo;/\"/g; s/&rdquo;/\"/g;'
-  PUZZLE_TITLE=$(curl -s "$BASE_URL" | sed -n "$SED_EXTRACT" | sed "$SED_HTML_UNESCAPE")
+  local puzzle_base_url="https://adventofcode.com/$year/day/$day"
 
-  # Creating the solution stub
-  echo "package ${OUTPUT_DIR}
+  # Validate the year and the day are correct
+  status_code=$(curl -o /dev/null -s -w "%{http_code}" "$puzzle_base_url")
+  if [ "$status_code" -ne 200 ]; then
+    echo "Puzzle not found (year $year day $day)"
+    exit 1
+  fi
 
+  # Validate session token is valid
+  status_code=$(curl -o /dev/null -s -H "Cookie: session=$session" -w "%{http_code}" "$puzzle_base_url/input")
+  if [ "$status_code" -ne 200 ]; then
+    echo "Session token is missing or invalid (make sure to set AOC_SESSION environment variable with a valid token)"
+    exit 1
+  fi
+
+  echo "Preparing year $year day $day"
+
+  local day_padded; day_padded=$(printf "%02d" "$day")
+  local base_name_lowercase="year${year}day${day_padded}"
+  local base_name_pascalcase="Year${year}Day${day_padded}"
+
+  # Create output directory
+  local output_dir="puzzles/${year}/${base_name_lowercase}"
+  mkdir -p "${output_dir}"
+
+  # Create input file
+  local input_file_path="${output_dir}/${base_name_lowercase}.txt"
+  # Check for the existing input file
+  if [ -e "$input_file_path" ]; then
+    echo "Skip creating $input_file_path (file exists)"
+  else
+    # Download the input file
+    if curl -s -H "Cookie: session=$session" "https://adventofcode.com/$year/day/$day/input" -o "$input_file_path"
+    then
+      echo "Created $input_file_path"
+    else
+      echo "Failed to create $input_file_path"
+      exit 1
+    fi
+  fi
+
+  # Create solution file
+  local solution_file_path="$output_dir/${base_name_lowercase}.go"
+  # Check for the existing solution file
+  if [ -e "$solution_file_path" ]; then
+    echo "Skip creating $solution_file_path (file exists)"
+  else
+    local sed_extract='s/.*--- Day [0-9]\{1,2\}: \(.*\) ---.*/\1/p'
+    local sed_html_unescape='s/&nbsp;/ /g; s/&amp;/\&/g; s/&lt;/\</g; s/&gt;/\>/g; s/&quot;/\"/g; s/&apos;/\'"'"'/g; s/&ldquo;/\"/g; s/&rdquo;/\"/g;'
+    local puzzle_title; puzzle_title=$(curl -s "$puzzle_base_url" | sed -n "$sed_extract" | sed "$sed_html_unescape")
+
+    # Creating the solution stub
+    echo "package ${base_name_lowercase}
 import (
-	_ \"embed\"
-	\"strconv\"
+  _ \"embed\"
+  \"strconv\"
+
+  \"github.com/polarfish/advent-of-code-go/puzzles/registry\"
 )
 
-//go:embed ${PUZZLE_BASE_LOWERCASE}.txt
-var year${YEAR}Day${DAY_PADDED}Input string
+//go:embed ${base_name_lowercase}.txt
+var input string
 
 func init() {
-	// https://adventofcode.com/${YEAR}/day/${DAY}
-	addPuzzle(${YEAR}, ${DAY}, \"${PUZZLE_TITLE}\", ${PUZZLE_BASE_CAMELCASE}Input, ${PUZZLE_BASE_CAMELCASE}Part1, ${PUZZLE_BASE_CAMELCASE}Part2)
+  // https://adventofcode.com/${year}/day/${day}
+  registry.AddPuzzle(${year}, ${day}, \"${puzzle_title}\", input, part1, part2)
 }
 
-func ${PUZZLE_BASE_CAMELCASE}Part1(input string) string {
-	return strconv.Itoa(0)
+func part1(input string) string {
+  return strconv.Itoa(0)
 }
 
-func ${PUZZLE_BASE_CAMELCASE}Part2(input string) string {
-	return strconv.Itoa(0)
-}" > "$SOLUTION_PATH"
+func part2(input string) string {
+  return strconv.Itoa(0)
+}" > "$solution_file_path"
 
-  if [[ $? -eq 0 ]]; then
-    echo "Created $SOLUTION_PATH"
-  else
-    echo "Failed to create $SOLUTION_PATH"
-    exit 1
+    if [[ $? -eq 0 ]]; then
+      echo "Created $solution_file_path"
+    else
+      echo "Failed to create $solution_file_path"
+      exit 1
+    fi
   fi
-fi
 
-TESTS_PATH="$OUTPUT_DIR/${PUZZLE_BASE_LOWERCASE}_test.go"
-# Check for the existing tests file
-if [ -e "$TESTS_PATH" ]; then
-  echo "Skip creating $TESTS_PATH (file exists)"
-else
+  # Create test file
+  local test_file_path="$output_dir/${base_name_lowercase}_test.go"
+  # Check for the existing tests file
+  if [ -e "$test_file_path" ]; then
+    echo "Skip creating $test_file_path (file exists)"
+  else
 
-  # Creating the tests stub
-  echo "package ${OUTPUT_DIR}
+    # Creating the test stub
+    # shellcheck disable=SC2028
+    echo "package ${base_name_lowercase}
+import (
+  \"testing\"
+)
 
-import \"testing\"
-
-func Test${PUZZLE_BASE_PASCALCASE}Part1(t *testing.T) {
-	runTests(t, ${PUZZLE_BASE_CAMELCASE}Part1, map[string]testCase{
-		\"input\": {${PUZZLE_BASE_CAMELCASE}Input, \"0\"},
-	})
+func Test${base_name_pascalcase}Part1(t *testing.T) {
+  t.Run(\"input\", func(t *testing.T) {
+    if want, got := \"0\", part1(input); got != want {
+      t.Errorf(\"\nwant:\n%s\ngot:\n%s\", want, got)
+    }
+  })
 }
 
-func Test${PUZZLE_BASE_PASCALCASE}Part2(t *testing.T) {
-	runTests(t, ${PUZZLE_BASE_CAMELCASE}Part2, map[string]testCase{
-		\"input\": {${PUZZLE_BASE_CAMELCASE}Input, \"0\"},
-	})
-}" > "$TESTS_PATH"
+func Test${base_name_pascalcase}Part2(t *testing.T) {
+  t.Run(\"input\", func(t *testing.T) {
+    if want, got := \"0\", part2(input); got != want {
+      t.Errorf(\"\nwant:\n%s\ngot:\n%s\", want, got)
+    }
+  })
+}" > "$test_file_path"
 
-  if [[ $? -eq 0 ]]; then
-    echo "Created $TESTS_PATH"
-  else
-    echo "Failed to create $TESTS_PATH"
-    exit 1
+    if [[ $? -eq 0 ]]; then
+      echo "Created $test_file_path"
+    else
+      echo "Failed to create $test_file_path"
+      exit 1
+    fi
   fi
-fi
+
+  refresh_puzzle_loader
+}
+
+main "$@"
