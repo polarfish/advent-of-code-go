@@ -82,27 +82,28 @@ function main() {
 
     # Creating the solution stub
     echo "package ${base_name_lowercase}
-import (
-  _ \"embed\"
-  \"strconv\"
 
-  \"github.com/polarfish/advent-of-code-go/puzzles/registry\"
+import (
+    _ \"embed\"
+    \"strconv\"
+
+    \"github.com/polarfish/advent-of-code-go/puzzles/registry\"
 )
 
 //go:embed ${base_name_lowercase}.txt
 var input string
 
 func init() {
-  // https://adventofcode.com/${year}/day/${day}
-  registry.AddPuzzle(${year}, ${day}, \"${puzzle_title}\", input, part1, part2)
+    // https://adventofcode.com/${year}/day/${day}
+    registry.AddPuzzle(${year}, ${day}, \"${puzzle_title}\", input, part1, part2)
 }
 
 func part1(input string) string {
-  return strconv.Itoa(0)
+    return strconv.Itoa(0)
 }
 
 func part2(input string) string {
-  return strconv.Itoa(0)
+    return strconv.Itoa(0)
 }" > "$solution_file_path"
 
     if [[ $? -eq 0 ]]; then
@@ -123,24 +124,25 @@ func part2(input string) string {
     # Creating the test stub
     # shellcheck disable=SC2028
     echo "package ${base_name_lowercase}
+
 import (
-  \"testing\"
+    \"testing\"
 )
 
 func Test${base_name_pascalcase}Part1(t *testing.T) {
-  t.Run(\"input\", func(t *testing.T) {
-    if want, got := \"0\", part1(input); got != want {
-      t.Errorf(\"\nwant:\n%s\ngot:\n%s\", want, got)
-    }
-  })
+    t.Run(\"input\", func(t *testing.T) {
+        if want, got := \"0\", part1(input); got != want {
+            t.Errorf(\"\nwant:\n%s\ngot:\n%s\", want, got)
+        }
+    })
 }
 
 func Test${base_name_pascalcase}Part2(t *testing.T) {
-  t.Run(\"input\", func(t *testing.T) {
-    if want, got := \"0\", part2(input); got != want {
-      t.Errorf(\"\nwant:\n%s\ngot:\n%s\", want, got)
-    }
-  })
+    t.Run(\"input\", func(t *testing.T) {
+        if want, got := \"0\", part2(input); got != want {
+            t.Errorf(\"\nwant:\n%s\ngot:\n%s\", want, got)
+        }
+    })
 }" > "$test_file_path"
 
     if [[ $? -eq 0 ]]; then
