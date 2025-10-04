@@ -1,19 +1,15 @@
 package year2015day01
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/polarfish/advent-of-code-go/puzzles/utils"
+)
 
 func TestYear2015day01Part1(t *testing.T) {
-	t.Run("input", func(t *testing.T) {
-		if want, got := "280", part1(input); got != want {
-			t.Errorf("\nwant:\n%s\ngot:\n%s", want, got)
-		}
-	})
+	utils.Test(t, "280", part1(input))
 }
 
 func TestYear2015day01Part2(t *testing.T) {
-	t.Run("input", func(t *testing.T) {
-		if want, got := "1797", part2(input); got != want {
-			t.Errorf("\nwant:\n%s\ngot:\n%s", want, got)
-		}
-	})
+	utils.Test(t, "1797", part2(input))
 }

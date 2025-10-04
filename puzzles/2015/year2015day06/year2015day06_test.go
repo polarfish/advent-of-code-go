@@ -2,20 +2,14 @@ package year2015day06
 
 import (
 	"testing"
+
+	"github.com/polarfish/advent-of-code-go/puzzles/utils"
 )
 
 func TestYear2015Day06Part1(t *testing.T) {
-	t.Run("input", func(t *testing.T) {
-		if want, got := "400410", part1(input); got != want {
-			t.Errorf("\nwant:\n%s\ngot:\n%s", want, got)
-		}
-	})
+	utils.Test(t, "400410", part1(input))
 }
 
 func TestYear2015Day06Part2(t *testing.T) {
-	t.Run("input", func(t *testing.T) {
-		if want, got := "15343601", part2(input); got != want {
-			t.Errorf("\nwant:\n%s\ngot:\n%s", want, got)
-		}
-	})
+	utils.Test(t, "15343601", part2(input))
 }
