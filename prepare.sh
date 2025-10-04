@@ -127,22 +127,16 @@ func part2(input string) string {
 
 import (
     \"testing\"
+
+    \"github.com/polarfish/advent-of-code-go/puzzles/utils\"
 )
 
 func Test${base_name_pascalcase}Part1(t *testing.T) {
-    t.Run(\"input\", func(t *testing.T) {
-        if want, got := \"0\", part1(input); got != want {
-            t.Errorf(\"\nwant:\n%s\ngot:\n%s\", want, got)
-        }
-    })
+    utils.Test(t, \"0\", part1(input))
 }
 
 func Test${base_name_pascalcase}Part2(t *testing.T) {
-    t.Run(\"input\", func(t *testing.T) {
-        if want, got := \"0\", part2(input); got != want {
-            t.Errorf(\"\nwant:\n%s\ngot:\n%s\", want, got)
-        }
-    })
+    utils.Test(t, \"0\", part2(input))
 }" > "$test_file_path"
 
     if [[ $? -eq 0 ]]; then
