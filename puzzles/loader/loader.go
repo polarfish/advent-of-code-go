@@ -9,4 +9,5 @@ import (
 	_ "github.com/polarfish/advent-of-code-go/puzzles/2015/year2015day06"
 	_ "github.com/polarfish/advent-of-code-go/puzzles/2015/year2015day07"
 	_ "github.com/polarfish/advent-of-code-go/puzzles/2015/year2015day08"
+	_ "github.com/polarfish/advent-of-code-go/puzzles/2024/year2024day01"
 )
