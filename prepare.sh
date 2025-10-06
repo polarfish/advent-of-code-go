@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function refresh_puzzle_loader() {
+function regenerate_puzzle_loader() {
   local loader_file_path="puzzles/loader/loader.go"
   local puzzles_sub_packages; puzzles_sub_packages=$(find puzzles -mindepth 2 -maxdepth 2 | grep "year20" | sort)
 
@@ -13,7 +13,42 @@ function refresh_puzzle_loader() {
   done
   echo ")" >> "${loader_file_path}"
 
-  echo "Refreshed puzzles/loader.go"
+  echo "Regenerated puzzles/loader.go"
+}
+
+function regenerate_puzzles_markdown() {
+  local output_file="README.md"
+  {
+    echo "# advent-of-code-go"
+    echo
+    echo "All years Advent Of Code solutions in Go"
+    echo
+  } > "$output_file"
+
+  local years; years=$(find puzzles -mindepth 1 -maxdepth 1 -type d | grep "20" | sort)
+  for year_dir in $years; do
+    local year; year=$(basename "$year_dir")
+    echo "## $year" >> "$output_file"
+    echo >> "$output_file"
+    # Find all day directories under the year
+    local day_dirs; day_dirs=$(find "$year_dir" -mindepth 1 -maxdepth 1 -type d | sort)
+    local first_day=true
+    for day_dir in $day_dirs; do
+      local day; day=$(basename "$day_dir")
+      local solution_file="$day_dir/${day}.go"
+      if [ -f "$solution_file" ]; then
+        local day_num; day_num=$(echo "$day" | sed -E 's/year[0-9]{4}day([0-9]{2})/\1/')
+        if $first_day; then
+          first_day=false
+        else
+          echo -n "• " >> "$output_file"
+        fi
+        echo "[Day $day_num]($solution_file)" >> "$output_file"
+      fi
+    done
+    echo "" >> "$output_file"
+  done
+  echo "Regenerated README.md"
 }
 
 function main() {
@@ -147,7 +182,8 @@ func Test${base_name_pascalcase}Part2(t *testing.T) {
     fi
   fi
 
-  refresh_puzzle_loader
+  regenerate_puzzle_loader
+  regenerate_puzzles_markdown
 }
 
 main "$@"
