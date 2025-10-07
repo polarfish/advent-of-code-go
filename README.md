@@ -18,4 +18,5 @@ All years Advent Of Code solutions in Go
 [Day 01](puzzles/2024/year2024day01/year2024day01.go)
 • [Day 02](puzzles/2024/year2024day02/year2024day02.go)
 • [Day 03](puzzles/2024/year2024day03/year2024day03.go)
+• [Day 04](puzzles/2024/year2024day04/year2024day04.go)
 
