@@ -13,4 +13,5 @@ import (
 	_ "github.com/polarfish/advent-of-code-go/puzzles/2024/year2024day02"
 	_ "github.com/polarfish/advent-of-code-go/puzzles/2024/year2024day03"
 	_ "github.com/polarfish/advent-of-code-go/puzzles/2024/year2024day04"
+	_ "github.com/polarfish/advent-of-code-go/puzzles/2024/year2024day05"
 )

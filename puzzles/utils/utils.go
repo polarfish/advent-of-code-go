@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"bufio"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -10,7 +12,13 @@ const ErrorResult string = "error"
 const NaResult string = "n/a"
 
 func Lines(input string) []string {
-	return strings.Split(strings.TrimSpace(input), "\n")
+	var lines []string
+	reader := strings.NewReader(strings.TrimSpace(input))
+	scanner := bufio.NewScanner(reader)
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+	return lines
 }
 
 func Abs(i int) int {
@@ -18,6 +26,15 @@ func Abs(i int) int {
 		return i
 	}
 	return -i
+}
+
+func ToInt(s string) int {
+	result, _ := strconv.Atoi(s)
+	return result
+}
+
+func ToStr(i int) string {
+	return strconv.Itoa(i)
 }
 
 func Test(t *testing.T, want, got string) {
