@@ -2,10 +2,10 @@ package year2015day06
 
 import (
 	_ "embed"
-	"strconv"
 	"strings"
 
 	"github.com/polarfish/advent-of-code-go/puzzles/registry"
+	"github.com/polarfish/advent-of-code-go/puzzles/utils"
 )
 
 //go:embed year2015day06.txt
@@ -61,10 +61,8 @@ func simulateLights(input string, turnOn func(i int8) int8, turnOff func(i int8)
 			to = strings.Split(split[3], ",")
 		}
 
-		x1, _ = strconv.Atoi(from[0])
-		y1, _ = strconv.Atoi(from[1])
-		x2, _ = strconv.Atoi(to[0])
-		y2, _ = strconv.Atoi(to[1])
+		x1, y1 = utils.ToInt(from[0]), utils.ToInt(from[1])
+		x2, y2 = utils.ToInt(to[0]), utils.ToInt(to[1])
 
 		for j := y1; j <= y2; j++ {
 			for i := x1; i <= x2; i++ {
@@ -80,5 +78,5 @@ func simulateLights(input string, turnOn func(i int8) int8, turnOff func(i int8)
 		}
 	}
 
-	return strconv.Itoa(result)
+	return utils.ToStr(result)
 }

@@ -3,9 +3,9 @@ package year2024day03
 import (
 	_ "embed"
 	"regexp"
-	"strconv"
 
 	"github.com/polarfish/advent-of-code-go/puzzles/registry"
+	"github.com/polarfish/advent-of-code-go/puzzles/utils"
 )
 
 //go:embed year2024day03.txt
@@ -21,11 +21,9 @@ func part1(input string) string {
 	matches := re.FindAllStringSubmatch(input, -1)
 	var result int
 	for _, match := range matches {
-		left, _ := strconv.Atoi(match[1])
-		right, _ := strconv.Atoi(match[2])
-		result += left * right
+		result += utils.ToInt(match[1]) * utils.ToInt(match[2])
 	}
-	return strconv.Itoa(result)
+	return utils.ToStr(result)
 }
 
 func part2(input string) string {
@@ -37,9 +35,7 @@ func part2(input string) string {
 		switch match[0][2] {
 		case 'l': // mul
 			if doMultiply {
-				left, _ := strconv.Atoi(match[1])
-				right, _ := strconv.Atoi(match[2])
-				result += left * right
+				result += utils.ToInt(match[1]) * utils.ToInt(match[2])
 			}
 		case 'n': // don't
 			doMultiply = false
@@ -48,5 +44,5 @@ func part2(input string) string {
 		}
 	}
 
-	return strconv.Itoa(result)
+	return utils.ToStr(result)
 }

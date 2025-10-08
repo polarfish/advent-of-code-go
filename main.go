@@ -9,7 +9,6 @@ import (
 
 	"fmt"
 	"os"
-	"strconv"
 	"time"
 )
 
@@ -18,12 +17,12 @@ func main() {
 
 	var year int
 	if len(args) > 0 {
-		year, _ = strconv.Atoi(args[0])
+		year = utils.ToInt(args[0])
 	}
 
 	var day int
 	if len(args) > 1 {
-		day, _ = strconv.Atoi(args[1])
+		day = utils.ToInt(args[1])
 	}
 
 	var puzzlesToRun []*utils.Puzzle

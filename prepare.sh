@@ -123,6 +123,7 @@ import (
     \"strconv\"
 
     \"github.com/polarfish/advent-of-code-go/puzzles/registry\"
+    \"github.com/polarfish/advent-of-code-go/puzzles/utils\"
 )
 
 //go:embed ${base_name_lowercase}.txt
@@ -134,11 +135,11 @@ func init() {
 }
 
 func part1(input string) string {
-    return strconv.Itoa(0)
+    return utils.ToStr(0)
 }
 
 func part2(input string) string {
-    return strconv.Itoa(0)
+    return utils.ToStr(0)
 }" > "$solution_file_path"
 
     if [[ $? -eq 0 ]]; then

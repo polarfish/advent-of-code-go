@@ -2,7 +2,6 @@ package year2024day02
 
 import (
 	_ "embed"
-	"strconv"
 	"strings"
 
 	"github.com/polarfish/advent-of-code-go/puzzles/registry"
@@ -24,14 +23,14 @@ func part1(input string) string {
 		split := strings.Split(line, " ")
 		levels := make([]int, len(split))
 		for i, s := range split {
-			levels[i], _ = strconv.Atoi(s)
+			levels[i] = utils.ToInt(s)
 		}
 		if findBadLevel(levels, -1) == -1 {
 			result++
 		}
 	}
 
-	return strconv.Itoa(result)
+	return utils.ToStr(result)
 }
 
 func part2(input string) string {
@@ -41,7 +40,7 @@ func part2(input string) string {
 		split := strings.Split(line, " ")
 		levels := make([]int, len(split))
 		for i, s := range split {
-			levels[i], _ = strconv.Atoi(s)
+			levels[i] = utils.ToInt(s)
 		}
 		badLevel := findBadLevel(levels, -1)
 		if badLevel == -1 ||
@@ -52,7 +51,7 @@ func part2(input string) string {
 		}
 	}
 
-	return strconv.Itoa(result)
+	return utils.ToStr(result)
 }
 
 func findBadLevel(levels []int, levelToSkip int) int {

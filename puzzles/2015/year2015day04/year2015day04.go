@@ -3,7 +3,6 @@ package year2015day04
 import (
 	"crypto/md5"
 	_ "embed"
-	"strconv"
 	"strings"
 
 	"github.com/polarfish/advent-of-code-go/puzzles/registry"
@@ -53,7 +52,7 @@ func solve(input string, test func([16]byte) bool) string {
 
 		res = md5.Sum(inputBytes)
 		if test(res) {
-			return strconv.Itoa(i)
+			return utils.ToStr(i)
 		}
 	}
 	return utils.ErrorResult

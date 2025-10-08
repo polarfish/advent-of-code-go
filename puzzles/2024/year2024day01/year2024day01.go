@@ -3,7 +3,6 @@ package year2024day01
 import (
 	_ "embed"
 	"slices"
-	"strconv"
 	"strings"
 
 	"github.com/polarfish/advent-of-code-go/puzzles/registry"
@@ -24,8 +23,7 @@ func part1(input string) string {
 	right := make([]int, len(lines))
 	for i, line := range lines {
 		split := strings.Split(line, "   ")
-		left[i], _ = strconv.Atoi(split[0])
-		right[i], _ = strconv.Atoi(split[1])
+		left[i], right[i] = utils.ToInt(split[0]), utils.ToInt(split[1])
 	}
 
 	slices.Sort(left)
@@ -36,7 +34,7 @@ func part1(input string) string {
 		total += utils.Abs(left[i] - right[i])
 	}
 
-	return strconv.Itoa(total)
+	return utils.ToStr(total)
 }
 
 func part2(input string) string {
@@ -45,9 +43,9 @@ func part2(input string) string {
 	right := make(map[int]int, len(lines))
 	for i, line := range lines {
 		split := strings.Split(line, "   ")
-		left[i], _ = strconv.Atoi(split[0])
-		n2, _ := strconv.Atoi(split[1])
-		right[n2]++
+		l, r := utils.ToInt(split[0]), utils.ToInt(split[1])
+		left[i] = l
+		right[r]++
 	}
 
 	var total int
@@ -57,5 +55,5 @@ func part2(input string) string {
 		}
 	}
 
-	return strconv.Itoa(total)
+	return utils.ToStr(total)
 }

@@ -2,10 +2,10 @@ package year2015day07
 
 import (
 	_ "embed"
-	"strconv"
 	"strings"
 
 	"github.com/polarfish/advent-of-code-go/puzzles/registry"
+	"github.com/polarfish/advent-of-code-go/puzzles/utils"
 )
 
 //go:embed year2015day07.txt
@@ -19,7 +19,7 @@ func init() {
 func part1(input string) string {
 	gates, memo := prepareGates(input)
 	result := int(gateValue("a", gates, memo))
-	return strconv.Itoa(result)
+	return utils.ToStr(result)
 }
 
 func part2(input string) string {
@@ -28,7 +28,7 @@ func part2(input string) string {
 	clear(memo)
 	memo["b"] = signalA
 	result := int(gateValue("a", gates, memo))
-	return strconv.Itoa(result)
+	return utils.ToStr(result)
 }
 
 func gateValue(wire string, gates map[string]func() uint16, memo map[string]uint16) uint16 {
@@ -40,8 +40,7 @@ func gateValue(wire string, gates map[string]func() uint16, memo map[string]uint
 	if wire[0] > '9' {
 		result = gates[wire]()
 	} else {
-		tmp, _ := strconv.Atoi(wire)
-		result = uint16(tmp)
+		result = uint16(utils.ToInt(wire))
 	}
 
 	memo[wire] = result
@@ -75,7 +74,6 @@ func prepareGates(input string) (map[string]func() uint16, map[string]uint16) {
 			from := split[1]
 			gates[to] = func() uint16 {
 				value := ^gateValue(from)
-				//print(to, " = ", value, "\n")
 				return value
 			}
 		} else if len(split) == 5 { // AND, OR, LSHIFT, RSHIFT
