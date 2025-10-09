@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -59,7 +58,6 @@ func preparePuzzle(year, day, session string) error {
 	}
 	solutionFile := filepath.Join(outputDir, baseNameLower+".go")
 	if _, err := os.Stat(solutionFile); os.IsNotExist(err) {
-		if err := createSolutionStub(solutionFile, year, day, baseNameLower, baseNamePascal); err != nil {
 			return err
 		}
 		fmt.Println("Created", solutionFile)
@@ -139,7 +137,6 @@ func getPuzzleTitle(year, day string) string {
 		return ""
 	}
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return ""
 	}
@@ -158,7 +155,6 @@ func htmlUnescape(s string) string {
 	return replacer.Replace(s)
 }
 
-func createSolutionStub(path, year, day, baseNameLower, baseNamePascal string) error {
 	title := getPuzzleTitle(year, day)
 	stub := fmt.Sprintf(`package %s
 
@@ -212,7 +208,6 @@ func regeneratePuzzleLoader() error {
 	loaderFilePath := filepath.Join("loader", "loader.go")
 	var subPackages []string
 	root := "puzzles"
-	yearDirs, err := ioutil.ReadDir(root)
 	if err != nil {
 		return err
 	}
@@ -221,7 +216,6 @@ func regeneratePuzzleLoader() error {
 			continue
 		}
 		yearPath := filepath.Join(root, yearDir.Name())
-		dayDirs, err := ioutil.ReadDir(yearPath)
 		if err != nil {
 			continue
 		}
