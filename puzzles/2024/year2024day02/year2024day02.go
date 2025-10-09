@@ -4,8 +4,8 @@ import (
 	_ "embed"
 	"strings"
 
-	"github.com/polarfish/advent-of-code-go/puzzles/registry"
-	"github.com/polarfish/advent-of-code-go/puzzles/utils"
+	"github.com/polarfish/advent-of-code-go/registry"
+	"github.com/polarfish/advent-of-code-go/utils"
 )
 
 //go:embed year2024day02.txt

@@ -3,9 +3,9 @@ package main
 import (
 	"sort"
 
-	_ "github.com/polarfish/advent-of-code-go/puzzles/loader"
-	"github.com/polarfish/advent-of-code-go/puzzles/registry"
-	"github.com/polarfish/advent-of-code-go/puzzles/utils"
+	_ "github.com/polarfish/advent-of-code-go/loader"
+	"github.com/polarfish/advent-of-code-go/registry"
+	"github.com/polarfish/advent-of-code-go/utils"
 
 	"fmt"
 	"os"

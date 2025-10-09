@@ -1,7 +1,7 @@
 package registry
 
 import (
-	"github.com/polarfish/advent-of-code-go/puzzles/utils"
+	"github.com/polarfish/advent-of-code-go/utils"
 )
 
 var allPuzzles []*utils.Puzzle
