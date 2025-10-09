@@ -13,7 +13,7 @@ var input string
 
 func init() {
 	// https://adventofcode.com/2015/day/6
-	registry.AddPuzzle(2015, 6, "Probably a Fire Hazard", input, part1, part2)
+	registry.AddSolution(2015, 6, "Probably a Fire Hazard", input, part1, part2)
 }
 
 func part1(input string) string {

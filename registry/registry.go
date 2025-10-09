@@ -4,10 +4,10 @@ import (
 	"github.com/polarfish/advent-of-code-go/utils"
 )
 
-var allPuzzles []*utils.Puzzle
+var solutions []*utils.Solution
 
-func addPuzzle(year int, day int, name string, input string, part1 func(string) string, part2 func(string) string) {
-	allPuzzles = append(allPuzzles, &utils.Puzzle{
+func AddSolution(year int, day int, name string, input string, part1 func(string) string, part2 func(string) string) {
+	solutions = append(solutions, &utils.Solution{
 		Year:  year,
 		Day:   day,
 		Name:  name,
@@ -17,10 +17,6 @@ func addPuzzle(year int, day int, name string, input string, part1 func(string) 
 	})
 }
 
-func AddPuzzle(year int, day int, name string, input string, part1 func(string) string, part2 func(string) string) {
-	addPuzzle(year, day, name, input, part1, part2)
-}
-
-func GetAllPuzzles() []*utils.Puzzle {
-	return allPuzzles
+func GetSolutions() []*utils.Solution {
+	return solutions
 }

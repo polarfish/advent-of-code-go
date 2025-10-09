@@ -13,4 +13,4 @@ go run cmd/prepare.go 2014 1
 
 ## Solutions
 
-Solutions reside in [solutions](./puzzles) folder, organized by year and day.
+Solutions reside in [solutions](solutions) folder, organized by year and day.

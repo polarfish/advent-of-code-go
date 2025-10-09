@@ -26,15 +26,15 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err := preparePuzzle(year, day, session); err != nil {
+	if err := prepareSolution(year, day, session); err != nil {
 		fmt.Println("Error:", err)
 		os.Exit(1)
 	}
 }
 
-func preparePuzzle(year, day, session string) error {
+func prepareSolution(year, day, session string) error {
 	if !validatePuzzleExists(year, day) {
-		return fmt.Errorf("Puzzle not found (year %s day %s)", year, day)
+		return fmt.Errorf("Solution not found (year %s day %s)", year, day)
 	}
 	if !validateSession(session, year, day) {
 		return errors.New("session token is missing or invalid (make sure to set AOC_SESSION environment variable with a valid token)")
@@ -43,7 +43,7 @@ func preparePuzzle(year, day, session string) error {
 	dayPadded := fmt.Sprintf("%02s", day)
 	baseNameLower := fmt.Sprintf("year%vday%v", year, dayPadded)
 	baseNamePascal := fmt.Sprintf("Year%vDay%v", year, dayPadded)
-	outputDir := filepath.Join("puzzles", year, baseNameLower)
+	outputDir := filepath.Join("solutions", year, baseNameLower)
 	if err := os.MkdirAll(outputDir, 0755); err != nil {
 		return err
 	}
@@ -74,10 +74,10 @@ func preparePuzzle(year, day, session string) error {
 	} else {
 		fmt.Println("Skip creating", testFile, "(file exists)")
 	}
-	if err := regeneratePuzzleLoader(); err != nil {
+	if err := regenerateSolutionLoader(); err != nil {
 		return err
 	}
-	if err := regeneratePuzzlesMarkdown(); err != nil {
+	if err := regenerateSolutionReadme(); err != nil {
 		return err
 	}
 	return nil
@@ -173,7 +173,7 @@ var input string
 
 func init() {
     // https://adventofcode.com/%s/day/%s
-    registry.AddPuzzle(%s, %s, "%s", input, part1, part2)
+    registry.AddSolution(%s, %s, "%s", input, part1, part2)
 }
 
 func part1(input string) string {
@@ -207,10 +207,10 @@ func Test%sPart2(t *testing.T) {
 	return os.WriteFile(path, []byte(stub), 0644)
 }
 
-func regeneratePuzzleLoader() error {
+func regenerateSolutionLoader() error {
 	loaderFilePath := filepath.Join("loader", "loader.go")
 	var subPackages []string
-	root := "puzzles"
+	root := "solutions"
 	yearDirs, err := os.ReadDir(root)
 	if err != nil {
 		return err
@@ -235,7 +235,7 @@ func regeneratePuzzleLoader() error {
 	var buf bytes.Buffer
 	buf.WriteString("package loader\n\nimport (\n")
 	for _, sub := range subPackages {
-		buf.WriteString(fmt.Sprintf("\t_ \"github.com/polarfish/advent-of-code-go/puzzles/%s\"\n", sub))
+		buf.WriteString(fmt.Sprintf("\t_ \"github.com/polarfish/advent-of-code-go/solutions/%s\"\n", sub))
 	}
 	buf.WriteString(")\n")
 	if err := os.WriteFile(loaderFilePath, buf.Bytes(), 0644); err != nil {
@@ -245,11 +245,11 @@ func regeneratePuzzleLoader() error {
 	return nil
 }
 
-func regeneratePuzzlesMarkdown() error {
-	outputFile := filepath.Join("puzzles", "README.md")
+func regenerateSolutionReadme() error {
+	outputFile := filepath.Join("solutions", "README.md")
 	var buf bytes.Buffer
 	buf.WriteString("# Solutions index\n\n")
-	root := "puzzles"
+	root := "solutions"
 	yearDirs, err := os.ReadDir(root)
 	if err != nil {
 		return err
@@ -293,6 +293,6 @@ func regeneratePuzzlesMarkdown() error {
 	if err := os.WriteFile(outputFile, buf.Bytes(), 0644); err != nil {
 		return err
 	}
-	fmt.Println("Regenerated puzzles/README.md")
+	fmt.Println("Regenerated solutions/README.md")
 	return nil
 }

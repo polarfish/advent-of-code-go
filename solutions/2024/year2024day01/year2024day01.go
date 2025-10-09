@@ -14,7 +14,7 @@ var input string
 
 func init() {
 	// https://adventofcode.com/2024/day/1
-	registry.AddPuzzle(2024, 1, "Historian Hysteria", input, part1, part2)
+	registry.AddSolution(2024, 1, "Historian Hysteria", input, part1, part2)
 }
 
 func part1(input string) string {

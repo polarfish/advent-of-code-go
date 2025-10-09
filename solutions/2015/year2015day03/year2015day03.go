@@ -12,7 +12,7 @@ var input string
 
 func init() {
 	// https://adventofcode.com/2015/day/3
-	registry.AddPuzzle(2015, 3, "Perfectly Spherical Houses in a Vacuum", input, part1, part2)
+	registry.AddSolution(2015, 3, "Perfectly Spherical Houses in a Vacuum", input, part1, part2)
 }
 
 func part1(input string) string {

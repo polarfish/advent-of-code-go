@@ -44,7 +44,7 @@ func Test(t *testing.T, want, got string) {
 	}
 }
 
-type Puzzle struct {
+type Solution struct {
 	Day   int
 	Year  int
 	Name  string
@@ -54,15 +54,15 @@ type Puzzle struct {
 }
 
 type Result struct {
-	Puzzle    *Puzzle
+	Solution  *Solution
 	Result1   string
 	Result2   string
 	Duration1 time.Duration
 	Duration2 time.Duration
 }
 
-func (p Puzzle) Run() Result {
-	result := Result{Puzzle: &p}
+func (p Solution) Run() Result {
+	result := Result{Solution: &p}
 
 	start1 := time.Now()
 	result.Result1 = runSafe(p.Part1, p.Input)

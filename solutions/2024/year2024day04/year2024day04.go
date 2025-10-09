@@ -12,7 +12,7 @@ var input string
 
 func init() {
 	// https://adventofcode.com/2024/day/4
-	registry.AddPuzzle(2024, 4, "Ceres Search", input, part1, part2)
+	registry.AddSolution(2024, 4, "Ceres Search", input, part1, part2)
 }
 
 func part1(input string) string {

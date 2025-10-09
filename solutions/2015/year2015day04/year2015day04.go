@@ -16,7 +16,7 @@ const maxIterations = 100_000_000
 
 func init() {
 	// https://adventofcode.com/2015/day/4
-	registry.AddPuzzle(2015, 4, "The Ideal Stocking Stuffer", input, part1, part2)
+	registry.AddSolution(2015, 4, "The Ideal Stocking Stuffer", input, part1, part2)
 }
 
 func part1(input string) string {
