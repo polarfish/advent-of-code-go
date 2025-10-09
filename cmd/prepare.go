@@ -58,6 +58,7 @@ func preparePuzzle(year, day, session string) error {
 	}
 	solutionFile := filepath.Join(outputDir, baseNameLower+".go")
 	if _, err := os.Stat(solutionFile); os.IsNotExist(err) {
+		if err := createSolutionStub(solutionFile, year, day, baseNameLower); err != nil {
 			return err
 		}
 		fmt.Println("Created", solutionFile)
@@ -137,6 +138,7 @@ func getPuzzleTitle(year, day string) string {
 		return ""
 	}
 	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return ""
 	}
@@ -155,6 +157,7 @@ func htmlUnescape(s string) string {
 	return replacer.Replace(s)
 }
 
+func createSolutionStub(path, year, day, baseNameLower string) error {
 	title := getPuzzleTitle(year, day)
 	stub := fmt.Sprintf(`package %s
 
@@ -208,6 +211,7 @@ func regeneratePuzzleLoader() error {
 	loaderFilePath := filepath.Join("loader", "loader.go")
 	var subPackages []string
 	root := "puzzles"
+	yearDirs, err := os.ReadDir(root)
 	if err != nil {
 		return err
 	}
@@ -216,6 +220,7 @@ func regeneratePuzzleLoader() error {
 			continue
 		}
 		yearPath := filepath.Join(root, yearDir.Name())
+		dayDirs, err := os.ReadDir(yearPath)
 		if err != nil {
 			continue
 		}
