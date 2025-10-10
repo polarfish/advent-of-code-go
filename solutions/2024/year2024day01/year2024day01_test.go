@@ -3,7 +3,7 @@ package year2024day01
 import (
 	"testing"
 
-	"github.com/polarfish/advent-of-code-go/utils"
+	"github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 var sample = `

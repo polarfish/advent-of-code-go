@@ -3,13 +3,13 @@ package main
 import (
 	"sort"
 
-	_ "github.com/polarfish/advent-of-code-go/loader"
-	"github.com/polarfish/advent-of-code-go/registry"
-	"github.com/polarfish/advent-of-code-go/utils"
-
 	"fmt"
 	"os"
 	"time"
+
+	_ "github.com/polarfish/advent-of-code-go/tools/loader"
+	"github.com/polarfish/advent-of-code-go/tools/registry"
+	"github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 func main() {

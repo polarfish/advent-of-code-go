@@ -1,7 +1,7 @@
 package registry
 
 import (
-	"github.com/polarfish/advent-of-code-go/utils"
+	"github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 var solutions []*utils.Solution

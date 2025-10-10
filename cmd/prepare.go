@@ -208,7 +208,7 @@ func Test%sPart2(t *testing.T) {
 }
 
 func regenerateSolutionLoader() error {
-	loaderFilePath := filepath.Join("loader", "loader.go")
+	loaderFilePath := filepath.Join("tools", "loader", "loader.go")
 	var subPackages []string
 	root := "solutions"
 	yearDirs, err := os.ReadDir(root)

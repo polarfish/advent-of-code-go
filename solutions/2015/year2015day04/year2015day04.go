@@ -5,8 +5,8 @@ import (
 	_ "embed"
 	"strings"
 
-	"github.com/polarfish/advent-of-code-go/registry"
-	"github.com/polarfish/advent-of-code-go/utils"
+	"github.com/polarfish/advent-of-code-go/tools/registry"
+	"github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 //go:embed year2015day04.txt

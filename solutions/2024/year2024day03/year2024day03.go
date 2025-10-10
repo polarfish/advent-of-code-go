@@ -4,8 +4,8 @@ import (
 	_ "embed"
 	"regexp"
 
-	"github.com/polarfish/advent-of-code-go/registry"
-	"github.com/polarfish/advent-of-code-go/utils"
+	"github.com/polarfish/advent-of-code-go/tools/registry"
+	"github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 //go:embed year2024day03.txt

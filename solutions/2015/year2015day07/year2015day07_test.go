@@ -3,7 +3,7 @@ package year2015day07
 import (
 	"testing"
 
-	"github.com/polarfish/advent-of-code-go/utils"
+	"github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 func TestYear2015Day07Part1(t *testing.T) {
