@@ -11,7 +11,7 @@ Make sure to set environment variable `AOC_SESSION` to download your personal in
 
 To run a puzzle, run `go run cmd/aoc.go <year> <day>`.  
 To run all days of a year, run `go run cmd/aoc.go <year>`.  
-To run all days of fll years, run `go run cmd/aoc.go <year>`.  
+To run all days of all years, run `go run cmd/aoc.go <year>`.  
 
 ## Solutions
 
