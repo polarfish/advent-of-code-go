@@ -164,8 +164,8 @@ func createSolutionStub(path, year, day, baseNameLower string) error {
 import (
     _ "embed"
 
-    "github.com/polarfish/advent-of-code-go/registry"
-    "github.com/polarfish/advent-of-code-go/utils"
+    "github.com/polarfish/advent-of-code-go/tools/registry"
+    "github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 //go:embed %s.txt
@@ -193,15 +193,15 @@ func createTestStub(path, baseNameLower, baseNamePascal string) error {
 import (
     "testing"
 
-    "github.com/polarfish/advent-of-code-go/utils"
+    "github.com/polarfish/advent-of-code-go/tools/test"
 )
 
 func Test%sPart1(t *testing.T) {
-    utils.Test(t, "0", part1(input))
+    test.Assert(t, "0", part1(input))
 }
 
 func Test%sPart2(t *testing.T) {
-    utils.Test(t, "0", part2(input))
+    test.Assert(t, "0", part2(input))
 }
 `, baseNameLower, baseNamePascal, baseNamePascal)
 	return os.WriteFile(path, []byte(stub), 0644)
