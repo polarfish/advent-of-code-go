@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"strconv"
 	"strings"
-	"testing"
 	"time"
 )
 
@@ -35,13 +34,6 @@ func ToInt(s string) int {
 
 func ToStr(i int) string {
 	return strconv.Itoa(i)
-}
-
-func Test(t *testing.T, want, got string) {
-	t.Helper()
-	if got != want {
-		t.Errorf("\nwant:\n%s\ngot:\n%s", want, got)
-	}
 }
 
 type Solution struct {
