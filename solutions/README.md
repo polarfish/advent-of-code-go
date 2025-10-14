@@ -18,4 +18,5 @@
  • [Day 04](2024/year2024day04/year2024day04.go)
  • [Day 05](2024/year2024day05/year2024day05.go)
  • [Day 06](2024/year2024day06/year2024day06.go)
+ • [Day 07](2024/year2024day07/year2024day07.go)
 
