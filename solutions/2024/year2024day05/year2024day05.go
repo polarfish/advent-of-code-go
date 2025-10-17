@@ -3,6 +3,7 @@ package year2024day05
 import (
 	_ "embed"
 	"slices"
+	"strconv"
 	"strings"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
@@ -26,7 +27,7 @@ func part1(input string) string {
 			result += getMiddlePage(pages)
 		}
 	}
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func part2(input string) string {
@@ -40,7 +41,7 @@ func part2(input string) string {
 		slices.SortFunc(pages, cmp)
 		result += getMiddlePage(pages)
 	}
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func extractInput(input string) (map[int]struct{}, [][]int) {

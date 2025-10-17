@@ -8,7 +8,6 @@ import (
 )
 
 const ErrorResult string = "error"
-const NaResult string = "n/a"
 
 func Lines(input string) []string {
 	var lines []string
@@ -30,10 +29,6 @@ func Abs(i int) int {
 func ToInt(s string) int {
 	result, _ := strconv.Atoi(s)
 	return result
-}
-
-func ToStr(i int) string {
-	return strconv.Itoa(i)
 }
 
 type Solution struct {

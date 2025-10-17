@@ -2,6 +2,7 @@ package year2024day02
 
 import (
 	_ "embed"
+	"strconv"
 	"strings"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
@@ -30,7 +31,7 @@ func part1(input string) string {
 		}
 	}
 
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func part2(input string) string {
@@ -51,7 +52,7 @@ func part2(input string) string {
 		}
 	}
 
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func findBadLevel(levels []int, levelToSkip int) int {

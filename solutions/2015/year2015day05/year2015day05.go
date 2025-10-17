@@ -2,10 +2,10 @@ package year2015day05
 
 import (
 	_ "embed"
+	"strconv"
 	"strings"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
-	"github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 //go:embed year2015day05.txt
@@ -43,7 +43,7 @@ top:
 		}
 	}
 
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func part2(input string) string {
@@ -79,5 +79,5 @@ func part2(input string) string {
 		}
 	}
 
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }

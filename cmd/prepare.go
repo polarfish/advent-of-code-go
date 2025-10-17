@@ -163,6 +163,8 @@ func createSolutionStub(path, year, day, baseNameLower string) error {
 
 import (
     _ "embed"
+    "strconv"
+    "strconv"
 
     "github.com/polarfish/advent-of-code-go/tools/registry"
     "github.com/polarfish/advent-of-code-go/tools/utils"
@@ -177,11 +179,11 @@ func init() {
 }
 
 func part1(input string) string {
-    return utils.ToStr(0)
+    return strconv.Itoa(0)
 }
 
 func part2(input string) string {
-    return utils.ToStr(0)
+    return strconv.Itoa(0)
 }
 `, baseNameLower, baseNameLower, year, day, year, day, title)
 	return os.WriteFile(path, []byte(stub), 0644)

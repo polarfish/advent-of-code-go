@@ -2,6 +2,7 @@ package year2024day04
 
 import (
 	_ "embed"
+	"strconv"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
 	"github.com/polarfish/advent-of-code-go/tools/utils"
@@ -25,7 +26,7 @@ func part1(input string) string {
 		}
 	}
 
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func part2(input string) string {
@@ -44,7 +45,7 @@ func part2(input string) string {
 		}
 	}
 
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 const Xmas = "XMAS"

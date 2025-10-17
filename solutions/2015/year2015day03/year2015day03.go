@@ -2,9 +2,9 @@ package year2015day03
 
 import (
 	_ "embed"
+	"strconv"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
-	"github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 //go:embed year2015day03.txt
@@ -33,7 +33,7 @@ func part1(input string) string {
 		m[(y<<16)|x] = 1
 	}
 
-	return utils.ToStr(len(m))
+	return strconv.Itoa(len(m))
 }
 
 func part2(input string) string {
@@ -55,5 +55,5 @@ func part2(input string) string {
 		m[(coords[offset]<<16)|coords[offset+1]] = 1
 	}
 
-	return utils.ToStr(len(m))
+	return strconv.Itoa(len(m))
 }

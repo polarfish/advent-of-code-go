@@ -2,6 +2,7 @@ package year2015day06
 
 import (
 	_ "embed"
+	"strconv"
 	"strings"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
@@ -78,5 +79,5 @@ func simulateLights(input string, turnOn func(i int8) int8, turnOff func(i int8)
 		}
 	}
 
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }

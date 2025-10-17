@@ -2,6 +2,7 @@ package year2015day07
 
 import (
 	_ "embed"
+	"strconv"
 	"strings"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
@@ -19,7 +20,7 @@ func init() {
 func part1(input string) string {
 	gates, memo := prepareGates(input)
 	result := int(gateValue("a", gates, memo))
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func part2(input string) string {
@@ -28,7 +29,7 @@ func part2(input string) string {
 	clear(memo)
 	memo["b"] = signalA
 	result := int(gateValue("a", gates, memo))
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func gateValue(wire string, gates map[string]func() uint16, memo map[string]uint16) uint16 {

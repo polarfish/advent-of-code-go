@@ -2,6 +2,7 @@ package year2024day06
 
 import (
 	_ "embed"
+	"strconv"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
 	"github.com/polarfish/advent-of-code-go/tools/utils"
@@ -32,7 +33,7 @@ func part1(input string) string {
 			}
 		}
 	}
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func part2(input string) string {
@@ -43,7 +44,7 @@ func part2(input string) string {
 		visits[i] = make([]int, len(grid[0]))
 	}
 	result := checkForLoop(grid, visits, guardX, guardY, 0, true)
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func parseMap(input string) [][]byte {

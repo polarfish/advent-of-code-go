@@ -3,6 +3,7 @@ package year2024day03
 import (
 	_ "embed"
 	"regexp"
+	"strconv"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
 	"github.com/polarfish/advent-of-code-go/tools/utils"
@@ -23,7 +24,7 @@ func part1(input string) string {
 	for _, match := range matches {
 		result += utils.ToInt(match[1]) * utils.ToInt(match[2])
 	}
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func part2(input string) string {
@@ -44,5 +45,5 @@ func part2(input string) string {
 		}
 	}
 
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }

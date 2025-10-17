@@ -2,9 +2,9 @@ package year2015day02
 
 import (
 	_ "embed"
+	"strconv"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
-	"github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 //go:embed year2015day02.txt
@@ -25,7 +25,7 @@ func part1(input string) string {
 		s3 := h * l
 		result += s1*2 + s2*2 + s3*2 + min(s1, s2, s3)
 	}
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func part2(input string) string {
@@ -35,7 +35,7 @@ func part2(input string) string {
 		l, w, h := d[0], d[1], d[2]
 		result += (l+w+h-max(l, w, h))*2 + l*w*h
 	}
-	return utils.ToStr(result)
+	return strconv.Itoa(result)
 }
 
 func parseInput(input string) [][]int {

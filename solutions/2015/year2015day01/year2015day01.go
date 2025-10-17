@@ -2,6 +2,7 @@ package year2015day01
 
 import (
 	_ "embed"
+	"strconv"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
 	"github.com/polarfish/advent-of-code-go/tools/utils"
@@ -24,7 +25,7 @@ func part1(input string) string {
 			floor -= 1
 		}
 	}
-	return utils.ToStr(floor)
+	return strconv.Itoa(floor)
 }
 
 func part2(input string) string {
@@ -37,7 +38,7 @@ func part2(input string) string {
 		}
 
 		if floor < 0 {
-			return utils.ToStr(i + 1)
+			return strconv.Itoa(i + 1)
 		}
 	}
 	return utils.ErrorResult
