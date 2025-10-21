@@ -7,9 +7,9 @@ import (
 )
 
 func TestYear2015Day06Part1(t *testing.T) {
-	test.Assert(t, "400410", part1(input))
+	test.Assert(t, "400410", part1, input)
 }
 
 func TestYear2015Day06Part2(t *testing.T) {
-	test.Assert(t, "15343601", part2(input))
+	test.Assert(t, "15343601", part2, input)
 }

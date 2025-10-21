@@ -6,7 +6,7 @@ import (
 
 var solutions []*utils.Solution
 
-func AddSolution(year int, day int, name string, input string, part1 func(string) string, part2 func(string) string) {
+func AddSolution(year int, day int, name string, input string, part1 func(string) (string, error), part2 func(string) (string, error)) {
 	solutions = append(solutions, &utils.Solution{
 		Year:  year,
 		Day:   day,

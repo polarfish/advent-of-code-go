@@ -17,7 +17,7 @@ func init() {
 	registry.AddSolution(2024, 7, "Bridge Repair", input, part1, part2)
 }
 
-func part1(input string) string {
+func part1(input string) (string, error) {
 	var result int64
 	for _, line := range utils.Lines(input) {
 		split := strings.Split(line, ":")
@@ -31,10 +31,10 @@ func part1(input string) string {
 			result += expected
 		}
 	}
-	return strconv.FormatInt(result, 10)
+	return strconv.FormatInt(result, 10), nil
 }
 
-func part2(input string) string {
+func part2(input string) (string, error) {
 	var result int64
 	for _, line := range utils.Lines(input) {
 		split := strings.Split(line, ":")
@@ -48,7 +48,7 @@ func part2(input string) string {
 			result += expected
 		}
 	}
-	return strconv.FormatInt(result, 10)
+	return strconv.FormatInt(result, 10), nil
 }
 
 func solve1(expected, current int64, values []int, i int) bool {

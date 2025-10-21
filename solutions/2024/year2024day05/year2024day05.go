@@ -18,8 +18,11 @@ func init() {
 	registry.AddSolution(2024, 5, "Print Queue", input, part1, part2)
 }
 
-func part1(input string) string {
-	rules, updates := extractInput(input)
+func part1(input string) (string, error) {
+	rules, updates, err := extractInput(input)
+	if err != nil {
+		return "", err
+	}
 	cmp := createCmpFunc(rules)
 	result := 0
 	for _, pages := range updates {
@@ -27,11 +30,14 @@ func part1(input string) string {
 			result += getMiddlePage(pages)
 		}
 	}
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }
 
-func part2(input string) string {
-	rules, updates := extractInput(input)
+func part2(input string) (string, error) {
+	rules, updates, err := extractInput(input)
+	if err != nil {
+		return "", err
+	}
 	cmp := createCmpFunc(rules)
 	result := 0
 	for _, pages := range updates {
@@ -41,10 +47,10 @@ func part2(input string) string {
 		slices.SortFunc(pages, cmp)
 		result += getMiddlePage(pages)
 	}
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }
 
-func extractInput(input string) (map[int]struct{}, [][]int) {
+func extractInput(input string) (map[int]struct{}, [][]int, error) {
 	rules := make(map[int]struct{})
 	var updates [][]int
 	rulesFinished := false
@@ -55,18 +61,33 @@ func extractInput(input string) (map[int]struct{}, [][]int) {
 		}
 		if !rulesFinished {
 			split := strings.Split(line, "|")
-			before, after := utils.ToInt(split[0]), utils.ToInt(split[1])
+			var err error
+
+			before, err := strconv.Atoi(split[0])
+			if err != nil {
+				return nil, nil, utils.ErrBadInput
+			}
+
+			after, err := strconv.Atoi(split[1])
+			if err != nil {
+				return nil, nil, utils.ErrBadInput
+			}
+
 			rules[createRuleId(before, after)] = struct{}{}
 		} else {
 			split := strings.Split(line, ",")
 			pages := make([]int, len(split))
 			for i, s := range split {
-				pages[i] = utils.ToInt(s)
+				num, err := strconv.Atoi(s)
+				if err != nil {
+					return nil, nil, utils.ErrBadInput
+				}
+				pages[i] = num
 			}
 			updates = append(updates, pages)
 		}
 	}
-	return rules, updates
+	return rules, updates, nil
 }
 
 func createCmpFunc(rules map[int]struct{}) func(a, b int) int {

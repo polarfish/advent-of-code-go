@@ -17,7 +17,7 @@ func init() {
 
 var turn = [4]int{1, 2, 3, 0}
 
-func part1(input string) string {
+func part1(input string) (string, error) {
 	grid := parseMap(input)
 	guardX, guardY := findGuardPosition(grid)
 	visits := make([][]int, len(grid))
@@ -33,10 +33,10 @@ func part1(input string) string {
 			}
 		}
 	}
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }
 
-func part2(input string) string {
+func part2(input string) (string, error) {
 	grid := parseMap(input)
 	guardX, guardY := findGuardPosition(grid)
 	visits := make([][]int, len(grid))
@@ -44,7 +44,7 @@ func part2(input string) string {
 		visits[i] = make([]int, len(grid[0]))
 	}
 	result := checkForLoop(grid, visits, guardX, guardY, 0, true)
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }
 
 func parseMap(input string) [][]byte {

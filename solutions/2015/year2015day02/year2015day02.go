@@ -15,7 +15,7 @@ func init() {
 	registry.AddSolution(2015, 2, "I Was Told There Would Be No Math", input, part1, part2)
 }
 
-func part1(input string) string {
+func part1(input string) (string, error) {
 	dimensions := parseInput(input)
 	var result int
 	for _, d := range dimensions {
@@ -25,17 +25,17 @@ func part1(input string) string {
 		s3 := h * l
 		result += s1*2 + s2*2 + s3*2 + min(s1, s2, s3)
 	}
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }
 
-func part2(input string) string {
+func part2(input string) (string, error) {
 	dimensions := parseInput(input)
 	var result int
 	for _, d := range dimensions {
 		l, w, h := d[0], d[1], d[2]
 		result += (l+w+h-max(l, w, h))*2 + l*w*h
 	}
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }
 
 func parseInput(input string) [][]int {

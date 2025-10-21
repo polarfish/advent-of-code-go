@@ -16,7 +16,7 @@ func init() {
 	registry.AddSolution(2015, 5, "Doesn't He Have Intern-Elves For This?", input, part1, part2)
 }
 
-func part1(input string) string {
+func part1(input string) (string, error) {
 	var result int
 	lines := strings.Split(input, "\n")
 top:
@@ -43,10 +43,10 @@ top:
 		}
 	}
 
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }
 
-func part2(input string) string {
+func part2(input string) (string, error) {
 	var result int
 	lines := strings.Split(input, "\n")
 	for _, line := range lines {
@@ -79,5 +79,5 @@ func part2(input string) string {
 		}
 	}
 
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }

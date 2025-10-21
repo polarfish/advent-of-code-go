@@ -16,17 +16,17 @@ var sample = `
 `
 
 func TestYear2024Day01Part1Sample(t *testing.T) {
-	test.Assert(t, "11", part1(sample))
+	test.Assert(t, "11", part1, sample)
 }
 
 func TestYear2024Day01Part1(t *testing.T) {
-	test.Assert(t, "2430334", part1(input))
+	test.Assert(t, "2430334", part1, input)
 }
 
 func TestYear2024Day01Part2Sample(t *testing.T) {
-	test.Assert(t, "31", part2(sample))
+	test.Assert(t, "31", part2, sample)
 }
 
 func TestYear2024Day01Part2(t *testing.T) {
-	test.Assert(t, "28786472", part2(input))
+	test.Assert(t, "28786472", part2, input)
 }

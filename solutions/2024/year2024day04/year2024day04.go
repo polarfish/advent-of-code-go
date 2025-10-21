@@ -16,7 +16,7 @@ func init() {
 	registry.AddSolution(2024, 4, "Ceres Search", input, part1, part2)
 }
 
-func part1(input string) string {
+func part1(input string) (string, error) {
 	m := buildMap(input)
 
 	result := 0
@@ -26,10 +26,10 @@ func part1(input string) string {
 		}
 	}
 
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }
 
-func part2(input string) string {
+func part2(input string) (string, error) {
 	m := buildMap(input)
 
 	result := 0
@@ -45,7 +45,7 @@ func part2(input string) string {
 		}
 	}
 
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }
 
 const Xmas = "XMAS"

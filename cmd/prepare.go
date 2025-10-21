@@ -178,11 +178,11 @@ func init() {
     registry.AddSolution(%s, %s, "%s", input, part1, part2)
 }
 
-func part1(input string) string {
+func part1(input string) (string, error) {
     return strconv.Itoa(0)
 }
 
-func part2(input string) string {
+func part2(input string) (string, error) {
     return strconv.Itoa(0)
 }
 `, baseNameLower, baseNameLower, year, day, year, day, title)
@@ -199,11 +199,11 @@ import (
 )
 
 func Test%sPart1(t *testing.T) {
-    test.Assert(t, "0", part1(input))
+    test.Assert(t, "0", part1, input)
 }
 
 func Test%sPart2(t *testing.T) {
-    test.Assert(t, "0", part2(input))
+    test.Assert(t, "0", , part2, input)
 }
 `, baseNameLower, baseNamePascal, baseNamePascal)
 	return os.WriteFile(path, []byte(stub), 0644)

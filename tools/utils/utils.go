@@ -2,12 +2,13 @@ package utils
 
 import (
 	"bufio"
-	"strconv"
+	"errors"
 	"strings"
 	"time"
 )
 
-const ErrorResult string = "error"
+var ErrBadInput = errors.New("bad input")
+var ErrIterSafetyLimit = errors.New("reached iterations safety limit")
 
 func Lines(input string) []string {
 	var lines []string
@@ -19,55 +20,45 @@ func Lines(input string) []string {
 	return lines
 }
 
-func Abs(i int) int {
-	if i > 0 {
-		return i
-	}
-	return -i
-}
-
-func ToInt(s string) int {
-	result, _ := strconv.Atoi(s)
-	return result
-}
-
 type Solution struct {
 	Day   int
 	Year  int
 	Name  string
 	Input string
-	Part1 func(input string) string
-	Part2 func(input string) string
+	Part1 func(input string) (string, error)
+	Part2 func(input string) (string, error)
 }
 
 type Result struct {
 	Solution  *Solution
 	Result1   string
+	Error1    error
 	Result2   string
+	Error2    error
 	Duration1 time.Duration
 	Duration2 time.Duration
 }
 
-func (p Solution) Run() Result {
-	result := Result{Solution: &p}
+func (s Solution) Run() *Result {
+	r := Result{Solution: &s}
 
 	start1 := time.Now()
-	result.Result1 = runSafe(p.Part1, p.Input)
-	result.Duration1 = time.Since(start1)
+	r.Result1, r.Error1 = runSafe(s.Part1, s.Input)
+	r.Duration1 = time.Since(start1)
 
 	start2 := time.Now()
-	result.Result2 = runSafe(p.Part2, p.Input)
-	result.Duration2 = time.Since(start2)
+	r.Result2, r.Error2 = runSafe(s.Part2, s.Input)
+	r.Duration2 = time.Since(start2)
 
-	return result
+	return &r
 }
 
-func runSafe(part func(input string) string, input string) (result string) {
+func runSafe(part func(input string) (string, error), input string) (res string, err error) {
 	defer func() {
 		if r := recover(); r != nil {
-			result = ErrorResult
+			res, err = "", errors.New("panic: "+r.(string))
 		}
 	}()
-	result = part(input)
-	return result
+	res, err = part(input)
+	return
 }

@@ -16,7 +16,7 @@ func init() {
 	registry.AddSolution(2015, 1, "Not Quite Lisp", input, part1, part2)
 }
 
-func part1(input string) string {
+func part1(input string) (string, error) {
 	floor := 0
 	for _, ch := range input {
 		if ch == '(' {
@@ -25,10 +25,10 @@ func part1(input string) string {
 			floor -= 1
 		}
 	}
-	return strconv.Itoa(floor)
+	return strconv.Itoa(floor), nil
 }
 
-func part2(input string) string {
+func part2(input string) (string, error) {
 	floor := 0
 	for i, ch := range input {
 		if ch == '(' {
@@ -38,8 +38,8 @@ func part2(input string) string {
 		}
 
 		if floor < 0 {
-			return strconv.Itoa(i + 1)
+			return strconv.Itoa(i + 1), nil
 		}
 	}
-	return utils.ErrorResult
+	return "", utils.ErrBadInput
 }

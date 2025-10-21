@@ -17,31 +17,39 @@ func init() {
 	registry.AddSolution(2024, 2, "Red-Nosed Reports", input, part1, part2)
 }
 
-func part1(input string) string {
+func part1(input string) (string, error) {
+	var err error
 	result := 0
 	lines := utils.Lines(input)
 	for _, line := range lines {
 		split := strings.Split(line, " ")
 		levels := make([]int, len(split))
 		for i, s := range split {
-			levels[i] = utils.ToInt(s)
+			levels[i], err = strconv.Atoi(s)
+			if err != nil {
+				return "", err
+			}
 		}
 		if findBadLevel(levels, -1) == -1 {
 			result++
 		}
 	}
 
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }
 
-func part2(input string) string {
+func part2(input string) (string, error) {
+	var err error
 	result := 0
 	lines := utils.Lines(input)
 	for _, line := range lines {
 		split := strings.Split(line, " ")
 		levels := make([]int, len(split))
 		for i, s := range split {
-			levels[i] = utils.ToInt(s)
+			levels[i], err = strconv.Atoi(s)
+			if err != nil {
+				return "", err
+			}
 		}
 		badLevel := findBadLevel(levels, -1)
 		if badLevel == -1 ||
@@ -52,7 +60,7 @@ func part2(input string) string {
 		}
 	}
 
-	return strconv.Itoa(result)
+	return strconv.Itoa(result), nil
 }
 
 func findBadLevel(levels []int, levelToSkip int) int {

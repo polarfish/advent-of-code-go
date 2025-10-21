@@ -18,13 +18,21 @@ func init() {
 	registry.AddSolution(2024, 1, "Historian Hysteria", input, part1, part2)
 }
 
-func part1(input string) string {
+func part1(input string) (string, error) {
+	var err error
 	lines := utils.Lines(input)
 	left := make([]int, len(lines))
 	right := make([]int, len(lines))
 	for i, line := range lines {
 		split := strings.Split(line, "   ")
-		left[i], right[i] = utils.ToInt(split[0]), utils.ToInt(split[1])
+		left[i], err = strconv.Atoi(split[0])
+		if err != nil {
+			return "", err
+		}
+		right[i], err = strconv.Atoi(split[1])
+		if err != nil {
+			return "", err
+		}
 	}
 
 	slices.Sort(left)
@@ -32,19 +40,26 @@ func part1(input string) string {
 
 	var total int
 	for i := 0; i < len(lines); i++ {
-		total += utils.Abs(left[i] - right[i])
+		total += abs(left[i] - right[i])
 	}
 
-	return strconv.Itoa(total)
+	return strconv.Itoa(total), nil
 }
 
-func part2(input string) string {
+func part2(input string) (string, error) {
 	lines := utils.Lines(input)
 	left := make([]int, len(lines))
 	right := make(map[int]int, len(lines))
 	for i, line := range lines {
 		split := strings.Split(line, "   ")
-		l, r := utils.ToInt(split[0]), utils.ToInt(split[1])
+		l, err := strconv.Atoi(split[0])
+		if err != nil {
+			return "", err
+		}
+		r, err := strconv.Atoi(split[1])
+		if err != nil {
+			return "", err
+		}
 		left[i] = l
 		right[r]++
 	}
@@ -56,5 +71,12 @@ func part2(input string) string {
 		}
 	}
 
-	return strconv.Itoa(total)
+	return strconv.Itoa(total), nil
+}
+
+func abs(i int) int {
+	if i > 0 {
+		return i
+	}
+	return -i
 }

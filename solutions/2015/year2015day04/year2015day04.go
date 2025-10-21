@@ -20,19 +20,17 @@ func init() {
 	registry.AddSolution(2015, 4, "The Ideal Stocking Stuffer", input, part1, part2)
 }
 
-func part1(input string) string {
+func part1(input string) (string, error) {
 	return solve(input, func(result [16]byte) bool {
 		return result[0] == 0 && result[1] == 0 && result[2] < 16
 	})
 }
 
-func part2(input string) string {
-	return solve(input, func(result [16]byte) bool {
-		return result[0] == 0 && result[1] == 0 && result[2] == 0
-	})
+func part2(input string) (string, error) {
+	return solve(input, func(result [16]byte) bool { return result[0] == 0 && result[1] == 0 && result[2] == 0 })
 }
 
-func solve(input string, test func([16]byte) bool) string {
+func solve(input string, test func([16]byte) bool) (string, error) {
 	inputBytes := append([]byte(strings.TrimSpace(input)), 0)
 	threshold := 10
 	var l = len(inputBytes) - 1
@@ -53,8 +51,8 @@ func solve(input string, test func([16]byte) bool) string {
 
 		res = md5.Sum(inputBytes)
 		if test(res) {
-			return strconv.Itoa(i)
+			return strconv.Itoa(i), nil
 		}
 	}
-	return utils.ErrorResult
+	return "", utils.ErrIterSafetyLimit
 }
