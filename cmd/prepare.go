@@ -34,7 +34,7 @@ func main() {
 
 func prepareSolution(year, day, session string) error {
 	if !validatePuzzleExists(year, day) {
-		return fmt.Errorf("Solution not found (year %s day %s)", year, day)
+		return fmt.Errorf("solution not found (year %s day %s)", year, day)
 	}
 	if !validateSession(session, year, day) {
 		return errors.New("session token is missing or invalid (make sure to set AOC_SESSION environment variable with a valid token)")

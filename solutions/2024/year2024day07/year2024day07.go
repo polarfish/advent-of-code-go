@@ -21,7 +21,10 @@ func part1(input string) (string, error) {
 	var result int64
 	for _, line := range utils.Lines(input) {
 		split := strings.Split(line, ":")
-		expected, _ := strconv.ParseInt(split[0], 10, 64)
+		expected, err := strconv.ParseInt(split[0], 10, 64)
+		if err != nil {
+			return "", utils.ErrBadInput
+		}
 		valuesStr := strings.Fields(split[1])
 		values := make([]int, len(valuesStr))
 		for i, v := range valuesStr {
@@ -38,7 +41,10 @@ func part2(input string) (string, error) {
 	var result int64
 	for _, line := range utils.Lines(input) {
 		split := strings.Split(line, ":")
-		expected, _ := strconv.ParseInt(split[0], 10, 64)
+		expected, err := strconv.ParseInt(split[0], 10, 64)
+		if err != nil {
+			return "", utils.ErrBadInput
+		}
 		valuesStr := strings.Fields(split[1])
 		values := make([]int, len(valuesStr))
 		for i, v := range valuesStr {

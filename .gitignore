@@ -33,3 +33,7 @@ advent-of-code-go
 # jetbrains
 .idea
 *.iml
+
+# AoC
+prepare
+solve
