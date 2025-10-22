@@ -9,9 +9,20 @@ Make sure to set environment variable `AOC_SESSION` to download your personal in
 
 ## Solve
 
-To run a puzzle: `go run cmd/solve.go <year> <day>`.  
-To run all days of a year: `go run cmd/solve.go <year>`.  
-To run all days of all years, run `go run cmd/solve.go <year>`.
+To run 2024 day 1: 
+```shell
+go run cmd/solve.go 2024 1
+```  
+
+To run year 2024: 
+```shell
+go run cmd/solve.go 2024
+```  
+
+To run all years:
+```shell
+go run cmd/solve.go
+```
 
 ## Solutions
 
