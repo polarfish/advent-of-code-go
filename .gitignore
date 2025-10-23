@@ -28,12 +28,9 @@ go.work.sum
 year*.txt
 
 # resulting binary
-advent-of-code-go
+/prepare
+/solve
 
 # jetbrains
 .idea
 *.iml
-
-# AoC
-prepare
-solve
