@@ -29,8 +29,8 @@ func part2(input string) (string, error) {
 }
 
 type antenna struct {
-	y         int
 	x         int
+	y         int
 	frequency rune
 }
 
