@@ -9,17 +9,17 @@ Make sure to set environment variable `AOC_SESSION` to download your personal in
 
 ## Solve
 
-To run 2024 day 1: 
+Run one day: 
 ```shell
-go run cmd/solve/solve.go 2024 1
+go run cmd/solve/solve.go 2025 1
 ```  
 
-To run year 2024: 
+Run full year: 
 ```shell
-go run cmd/solve/solve.go 2024
+go run cmd/solve/solve.go 2015
 ```  
 
-To run all years:
+Run everything:
 ```shell
 go run cmd/solve/solve.go
 ```
