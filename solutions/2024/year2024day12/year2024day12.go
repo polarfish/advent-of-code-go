@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/polarfish/advent-of-code-go/tools/registry"
+	"github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 //go:embed year2024day12.txt
@@ -57,20 +58,12 @@ func part2(input string) (string, error) {
 }
 
 func parseMap(input string) [][]rune {
-	lines := make([][]rune, 0)
-	start := 0
-	for i, c := range input {
-		if c == '\n' {
-			if i > start {
-				lines = append(lines, []rune(input[start:i]))
-			}
-			start = i + 1
-		}
+	lines := utils.Lines(input)
+	mapData := make([][]rune, len(lines))
+	for y, line := range lines {
+		mapData[y] = []rune(line)
 	}
-	if start < len(input) {
-		lines = append(lines, []rune(input[start:]))
-	}
-	return lines
+	return mapData
 }
 
 func measureRegion(mapData [][]rune, x, y int, visited [][]bool) []int {
