@@ -68,7 +68,7 @@ func part2(input string) (string, error) {
 		switch line[0] {
 		case 'R':
 			dial += num
-			if dial > 99 {
+			if dial >= totalPositions {
 				dial -= totalPositions
 				result++
 			}
