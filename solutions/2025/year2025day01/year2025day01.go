@@ -26,9 +26,10 @@ func part1(input string) (string, error) {
 			return "", utils.ErrBadInput
 		}
 
-		if line[0] == 'R' {
+		switch line[0] {
+		case 'R':
 			dial += num
-		} else {
+		case 'L':
 			dial -= num
 		}
 
@@ -39,7 +40,7 @@ func part1(input string) (string, error) {
 		dial %= 100
 
 		if dial == 0 {
-			result += 1
+			result++
 		}
 	}
 
@@ -59,13 +60,14 @@ func part2(input string) (string, error) {
 		result += num / 100
 		num %= 100
 
-		if line[0] == 'R' {
+		switch line[0] {
+		case 'R':
 			dial += num
 			if dial > 99 {
 				dial -= 100
 				result++
 			}
-		} else {
+		case 'L':
 			oldDial := dial
 			dial -= num
 			if dial < 0 {
@@ -73,7 +75,6 @@ func part2(input string) (string, error) {
 				if oldDial != 0 {
 					result++
 				}
-
 			}
 			if dial == 0 {
 				result++
