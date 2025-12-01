@@ -24,5 +24,6 @@ import (
 	_ "github.com/polarfish/advent-of-code-go/solutions/2024/year2024day14"
 	_ "github.com/polarfish/advent-of-code-go/solutions/2024/year2024day15"
 	_ "github.com/polarfish/advent-of-code-go/solutions/2024/year2024day16"
+	_ "github.com/polarfish/advent-of-code-go/solutions/2024/year2024day17"
 	_ "github.com/polarfish/advent-of-code-go/solutions/2025/year2025day01"
 )
