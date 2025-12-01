@@ -16,9 +16,12 @@ func init() {
 	registry.AddSolution(2025, 1, "Secret Entrance", input, part1, part2)
 }
 
+const startPosition = 50
+const totalPositions = 100
+
 func part1(input string) (string, error) {
 	lines := utils.Lines(input)
-	dial := 50
+	dial := startPosition
 	result := 0
 	for _, line := range lines {
 		num, err := strconv.Atoi(line[1:])
@@ -31,13 +34,15 @@ func part1(input string) (string, error) {
 			dial += num
 		case 'L':
 			dial -= num
+		default:
+			return "", utils.ErrBadInput
 		}
 
 		for dial < 0 {
-			dial += 100
+			dial += totalPositions
 		}
 
-		dial %= 100
+		dial %= totalPositions
 
 		if dial == 0 {
 			result++
@@ -49,7 +54,7 @@ func part1(input string) (string, error) {
 
 func part2(input string) (string, error) {
 	lines := utils.Lines(input)
-	dial := 50
+	dial := startPosition
 	result := 0
 	for _, line := range lines {
 		num, err := strconv.Atoi(line[1:])
@@ -64,14 +69,14 @@ func part2(input string) (string, error) {
 		case 'R':
 			dial += num
 			if dial > 99 {
-				dial -= 100
+				dial -= totalPositions
 				result++
 			}
 		case 'L':
 			oldDial := dial
 			dial -= num
 			if dial < 0 {
-				dial += 100
+				dial += totalPositions
 				if oldDial != 0 {
 					result++
 				}
@@ -79,6 +84,8 @@ func part2(input string) (string, error) {
 			if dial == 0 {
 				result++
 			}
+		default:
+			return "", utils.ErrBadInput
 		}
 	}
 
