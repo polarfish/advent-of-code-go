@@ -62,8 +62,8 @@ func part2(input string) (string, error) {
 			return "", utils.ErrBadInput
 		}
 
-		result += num / 100
-		num %= 100
+		result += num / totalPositions
+		num %= totalPositions
 
 		switch line[0] {
 		case 'R':
