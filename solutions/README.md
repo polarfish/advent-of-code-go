@@ -36,4 +36,5 @@
  • [Day 02](2025/year2025day02/year2025day02.go)
  • [Day 03](2025/year2025day03/year2025day03.go)
  • [Day 04](2025/year2025day04/year2025day04.go)
+ • [Day 05](2025/year2025day05/year2025day05.go)
 
