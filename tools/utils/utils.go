@@ -12,7 +12,7 @@ var ErrIterSafetyLimit = errors.New("reached iterations safety limit")
 
 func Lines(input string) []string {
 	var lines []string
-	reader := strings.NewReader(strings.TrimSpace(input))
+	reader := strings.NewReader(strings.Trim(input, "\n\r"))
 	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
