@@ -48,45 +48,37 @@ func part1(input string) (string, error) {
 func part2(input string) (string, error) {
 	var result int64 = 0
 	lines := utils.Lines(input)
-	var beam int
+	data := make([][]byte, len(lines))
+	for i := range data {
+		data[i] = []byte(lines[i])
+	}
 
-	for i, ch := range lines[0] {
-		if ch == 'S' {
-			beam = i
+	timeline := make([]int64, len(data[0]))
+	for y, line := range data {
+		for x, ch := range line {
+			switch ch {
+			case 'S':
+				data[y+1][x] = '|'
+				timeline[x] = 1
+			case '^':
+				if y-1 >= 0 && data[y-1][x] == '|' {
+					data[y][x-1] = '|'
+					data[y][x+1] = '|'
+					timeline[x-1] += timeline[x]
+					timeline[x+1] += timeline[x]
+					timeline[x] = 0
+				}
+			case '.':
+				if y-1 >= 0 && data[y-1][x] == '|' {
+					data[y][x] = '|'
+				}
+			}
 		}
 	}
 
-	memo := make([][]int64, len(lines))
-	for i := range memo {
-		memo[i] = make([]int64, len(lines[0]))
+	for _, val := range timeline {
+		result += val
 	}
-
-	result = countTimelines(lines, 0, beam, memo)
 
 	return strconv.FormatInt(result, 10), nil
-}
-
-func countTimelines(lines []string, i int, beam int, memo [][]int64) int64 {
-	if beam < 0 || beam >= len(lines[0]) {
-		return 0
-	}
-
-	if i >= len(lines) {
-		return 1
-	}
-
-	if memo[i][beam] > 0 {
-		return memo[i][beam]
-	}
-
-	var timelines int64
-
-	if lines[i][beam] == '^' {
-		timelines = countTimelines(lines, i, beam-1, memo) + countTimelines(lines, i, beam+1, memo)
-	} else {
-		timelines = countTimelines(lines, i+1, beam, memo)
-	}
-
-	memo[i][beam] = timelines
-	return timelines
 }
