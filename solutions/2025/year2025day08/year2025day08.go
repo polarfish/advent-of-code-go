@@ -122,17 +122,10 @@ func prepareDistances(junctions []junction, distances []distance) []distance {
 }
 
 func calculateDistance(j1, j2 junction) int64 {
-	dx := abs(j1.x - j2.x)
-	dy := abs(j1.y - j2.y)
-	dz := abs(j1.z - j2.z)
+	dx := j1.x - j2.x
+	dy := j1.y - j2.y
+	dz := j1.z - j2.z
 	return dx*dx + dy*dy + dz*dz
-}
-
-func abs(a int64) int64 {
-	if a < 0 {
-		return -a
-	}
-	return a
 }
 
 func connectJunctions(connections int, distances []distance, junctionToCircuit []int, circuits map[int][]int) distance {
