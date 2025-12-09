@@ -1,0 +1,3 @@
+- 2025 day 2 - try increment ids with a pre-computed steps
+- 2025 day 8 - try using min-heap for sorting on the go
+- 2025 day 9 - try optimizing edges match by pre-sorting the edges, also compare with [day09_2.go](https://github.com/blfuentes/AdventOfCode_AllYears/blob/main/AdventOfCode_2025_Go/day09/day09_2.go)
