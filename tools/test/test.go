@@ -1,6 +1,7 @@
 package test
 
 import (
+	"runtime/debug"
 	"testing"
 )
 
@@ -8,7 +9,7 @@ func Assert(t *testing.T, want string, part func(string) (string, error), input 
 	t.Helper()
 	defer func() {
 		if r := recover(); r != nil {
-			t.Errorf("\nwant:\n%s\ngot panic:\n%s", want, r)
+			t.Errorf("\nwant:\n%s\ngot panic:\n%s\n%s", want, r, debug.Stack())
 		}
 	}()
 	got, err := part(input)

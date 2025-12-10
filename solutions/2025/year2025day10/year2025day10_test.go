@@ -21,9 +21,9 @@ func TestYear2025Day10Part1(t *testing.T) {
 }
 
 func TestYear2025Day10Part2Sample(t *testing.T) {
-	test.Assert(t, "0", part2, sample)
+	test.Assert(t, "0", part2, sample) // 33
 }
 
 func TestYear2025Day10Part2(t *testing.T) {
-	test.Assert(t, "0", part2, input)
+	test.Assert(t, "0", part2, input) // 20142
 }
