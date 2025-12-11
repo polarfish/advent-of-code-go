@@ -34,7 +34,7 @@ func part1(input string) (string, error) {
 }
 
 func part2(input string) (string, error) {
-	return strconv.Itoa(0), nil
+	return "", utils.ErrNotImplemented
 }
 
 type machine struct {
