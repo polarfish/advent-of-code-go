@@ -2,3 +2,4 @@
 - 2025 day 8 - try using min-heap for sorting on the go
 - 2025 day 9 - try optimizing edges match by pre-sorting the edges, also compare with [day09_2.go](https://github.com/blfuentes/AdventOfCode_AllYears/blob/main/AdventOfCode_2025_Go/day09/day09_2.go)
 - 2025 day 10 - try solving it with https://pkg.go.dev/gonum.org/v1/gonum@v0.16.0/optimize/convex/lp
+- 2025 day 11 - try solving it with a set of counters like for 2025 day 7
