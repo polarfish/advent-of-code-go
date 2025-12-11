@@ -28,13 +28,20 @@ func part1(input string) (string, error) {
 func part2(input string) (string, error) {
 	devices := parseInput(input)
 	memo := map[string]map[string]int{}
-	svrFft := searchAllPaths(devices, "svr", "fft", map[string]struct{}{"dac": {}}, memo)
-	svrDac := searchAllPaths(devices, "svr", "dac", map[string]struct{}{"fft": {}}, memo)
-	dacFft := searchAllPaths(devices, "dac", "fft", map[string]struct{}{}, memo)
+
+	result := 0
 	fftDac := searchAllPaths(devices, "fft", "dac", map[string]struct{}{}, memo)
-	fftOut := searchAllPaths(devices, "fft", "out", map[string]struct{}{"dac": {}}, memo)
-	dacOut := searchAllPaths(devices, "dac", "out", map[string]struct{}{"fft": {}}, memo)
-	result := svrFft*fftDac*dacOut + svrDac*dacFft*fftOut
+	if fftDac == 0 {
+		svrDac := searchAllPaths(devices, "svr", "dac", map[string]struct{}{"fft": {}}, memo)
+		dacFft := searchAllPaths(devices, "dac", "fft", map[string]struct{}{}, memo)
+		fftOut := searchAllPaths(devices, "fft", "out", map[string]struct{}{"dac": {}}, memo)
+		result = svrDac * dacFft * fftOut
+	} else {
+		svrFft := searchAllPaths(devices, "svr", "fft", map[string]struct{}{"dac": {}}, memo)
+		dacOut := searchAllPaths(devices, "dac", "out", map[string]struct{}{"fft": {}}, memo)
+		result = svrFft * fftDac * dacOut
+	}
+
 	return strconv.Itoa(result), nil
 }
 
