@@ -31,12 +31,12 @@ func part2(input string) (string, error) {
 
 	result := 0
 	fftDac := searchAllPaths(devices, "fft", "dac", map[string]struct{}{}, memo)
-	if fftDac == 0 {
+	if fftDac == 0 { // svr -> dac -> fft -> out
 		svrDac := searchAllPaths(devices, "svr", "dac", map[string]struct{}{"fft": {}}, memo)
 		dacFft := searchAllPaths(devices, "dac", "fft", map[string]struct{}{}, memo)
 		fftOut := searchAllPaths(devices, "fft", "out", map[string]struct{}{"dac": {}}, memo)
 		result = svrDac * dacFft * fftOut
-	} else {
+	} else { // svr -> fft -> dac -> out
 		svrFft := searchAllPaths(devices, "svr", "fft", map[string]struct{}{"dac": {}}, memo)
 		dacOut := searchAllPaths(devices, "dac", "out", map[string]struct{}{"fft": {}}, memo)
 		result = svrFft * fftDac * dacOut
@@ -45,7 +45,7 @@ func part2(input string) (string, error) {
 	return strconv.Itoa(result), nil
 }
 
-func searchAllPaths(devices map[string][]string, from, to string, visited map[string]struct{}, memo map[string]map[string]int) int {
+func searchAllPaths(devices map[string][]string, from, to string, seen map[string]struct{}, memo map[string]map[string]int) int {
 	if from == to {
 		return 1
 	}
@@ -60,16 +60,16 @@ func searchAllPaths(devices map[string][]string, from, to string, visited map[st
 		return val
 	}
 
-	visited[from] = struct{}{}
+	seen[from] = struct{}{}
 
 	totalPaths := 0
 	for _, connection := range devices[from] {
-		if _, ok := visited[connection]; !ok {
-			paths2 := searchAllPaths(devices, connection, to, visited, memo)
+		if _, ok := seen[connection]; !ok {
+			paths2 := searchAllPaths(devices, connection, to, seen, memo)
 			totalPaths += paths2
 		}
 	}
-	delete(visited, from)
+	delete(seen, from)
 	cache[to] = totalPaths
 	return totalPaths
 }
