@@ -2,8 +2,9 @@
 
 All years Advent Of Code solutions in Go
 
-## [Solutions](solutions)
+## Solutions
 
+Check [solutions](solutions) folder (organized by year).  
 Every solution is a separate Go module consisting of a solution file, a test file and an input file.
 
 ## Prepare
