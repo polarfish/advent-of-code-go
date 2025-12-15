@@ -228,11 +228,11 @@ func dfs(mat *matrix, idx int, values []int, minVal int, max int) int {
 
 	// Try different values for the current independent variable
 	total := 0
-	for i := 0; i < idx; i++ {
+	for i := range idx {
 		total += values[i]
 	}
 
-	for val := 0; val < max; val++ {
+	for val := range max {
 		// Optimization: If we ever go above our min result, we can't possibly do better
 		if total+val >= result {
 			break
