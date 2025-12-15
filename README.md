@@ -2,6 +2,11 @@
 
 All years Advent Of Code solutions in Go
 
+## Solutions
+
+Solutions reside in [solutions](solutions) folder, organized by year.  
+Every solution is a separate Go module consisting of a solution file, a test file and an input file.
+
 ## Prepare
 
 To prepare for solving next puzzle: `go run cmd/prepare/prepare.go <year> <day>`.  
@@ -24,7 +29,3 @@ Run everything:
 go run cmd/solve/solve.go
 ```
 
-## Solutions
-
-Solutions reside in [solutions](solutions) folder, organized by year.  
-Every solution is a separate Go module consisting of a solution file, a test file and an input file.
