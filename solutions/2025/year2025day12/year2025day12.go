@@ -2,7 +2,6 @@ package year2025day12
 
 import (
 	_ "embed"
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -70,13 +69,11 @@ func part1(input string) (string, error) {
 		}
 	}
 
-	fmt.Println(yes, no, maybe)
-
 	return strconv.Itoa(yes), nil
 }
 
 func part2(input string) (string, error) {
-	return strconv.Itoa(0), nil
+	return utils.NotAvailable, nil
 }
 
 type region struct {

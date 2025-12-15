@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+const NotAvailable = "n/a"
+
 var ErrBadInput = errors.New("bad input")
 var ErrNotImplemented = errors.New("not implemented")
 var ErrIterSafetyLimit = errors.New("reached iterations safety limit")

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/polarfish/advent-of-code-go/tools/test"
+	"github.com/polarfish/advent-of-code-go/tools/utils"
 )
 
 var sample = `
@@ -51,5 +52,5 @@ func TestYear2025Day12Part1(t *testing.T) {
 }
 
 func TestYear2025Day12Part2(t *testing.T) {
-	test.Assert(t, "0", part2, input)
+	test.Assert(t, utils.NotAvailable, part2, input)
 }
