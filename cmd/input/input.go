@@ -50,7 +50,7 @@ func main() {
 		fmt.Println("Error walking solutions directory:", err)
 		os.Exit(1)
 	}
-	fmt.Printf("Total input files created: %d\n", inputFilesCount)
+	fmt.Printf("Total input files downloaded: %d\n", inputFilesCount)
 }
 
 func extractYearDayFromPath(path string) (string, string, bool) {
@@ -70,8 +70,10 @@ func extractYearDayFromPath(path string) (string, string, bool) {
 }
 
 func downloadInput(session, year, day, outputPath string) error {
+	if len(day) == 2 && day[0] == '0' {
+		day = day[1:]
+	}
 	url := fmt.Sprintf("https://adventofcode.com/%s/day/%s/input", year, day)
-	print(url)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return err
