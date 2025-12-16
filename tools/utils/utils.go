@@ -23,6 +23,22 @@ func Lines(input string) []string {
 	return lines
 }
 
+func NewGrid[T any](y, x int) [][]T {
+	m := make([][]T, y)
+	for i := range m {
+		m[i] = make([]T, x)
+	}
+	return m
+}
+
+func ResetGrid[T any](grid [][]T, val T) {
+	for i := range grid {
+		for j := range grid[i] {
+			grid[i][j] = val
+		}
+	}
+}
+
 type Solution struct {
 	Day   int
 	Year  int

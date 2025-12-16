@@ -30,7 +30,7 @@ type fallingByte struct {
 	x, y int
 }
 
-func parseBytes(input string) ([]fallingByte, error) {
+func parseInput(input string) ([]fallingByte, error) {
 	lines := utils.Lines(input)
 	res := make([]fallingByte, len(lines))
 	for i, line := range lines {
@@ -49,11 +49,11 @@ func parseBytes(input string) ([]fallingByte, error) {
 }
 
 func part1(input string) (string, error) {
-	bytes, err := parseBytes(input)
+	bytes, err := parseInput(input)
 	if err != nil {
 		return "", err
 	}
-	var mapGrid [gridSize][gridSize]int
+	var mapGrid = utils.NewGrid[int](gridSize, gridSize)
 	for i := 0; i < 1024 && i < len(bytes); i++ {
 		b := bytes[i]
 		mapGrid[b.y][b.x] = 1
@@ -62,8 +62,8 @@ func part1(input string) (string, error) {
 	return strconv.Itoa(steps), nil
 }
 
-func bfs(mapGrid [gridSize][gridSize]int) int {
-	var visited [gridSize][gridSize]int
+func bfs(mapGrid [][]int) int {
+	var visited = utils.NewGrid[int](gridSize, gridSize)
 	queue := list.New()
 	queue.PushBack(pos{0, 0, 0})
 	visited[0][0] = 1
@@ -72,7 +72,6 @@ func bfs(mapGrid [gridSize][gridSize]int) int {
 		if p.x == gridSize-1 && p.y == gridSize-1 {
 			return p.steps
 		}
-		dirs := [][2]int{{0, -1}, {1, 0}, {0, 1}, {-1, 0}}
 		for _, d := range dirs {
 			nx, ny := p.x+d[0], p.y+d[1]
 			if nx >= 0 && nx < gridSize && ny >= 0 && ny < gridSize && mapGrid[ny][nx] == 0 && visited[ny][nx] == 0 {
@@ -85,29 +84,21 @@ func bfs(mapGrid [gridSize][gridSize]int) int {
 }
 
 func part2(input string) (string, error) {
-	bytes, err := parseBytes(input)
+	bytes, err := parseInput(input)
 	if err != nil {
 		return "", err
 	}
-	var mapGrid = make([][]int, gridSize)
-	for i := range mapGrid {
-		mapGrid[i] = make([]int, gridSize)
-	}
-	var visited = make([][]int, gridSize)
-	for i := range visited {
-		visited[i] = make([]int, gridSize)
-	}
-	for i := range visited {
-		for j := range visited[i] {
-			visited[i][j] = 2
-		}
-	}
+	var mapGrid = utils.NewGrid[int](gridSize, gridSize)
+	var visited = utils.NewGrid[int](gridSize, gridSize)
+	utils.ResetGrid(visited, 2)
 	var blocking fallingByte
 	for i, b := range bytes {
 		mapGrid[b.y][b.x] = 1
 		if i >= 1024 {
 			if visited[b.y][b.x] == 2 {
-				res := dfs(mapGrid, visited)
+				utils.ResetGrid(visited, 0)
+				visited[0][0] = 1
+				res := dfs(mapGrid, visited, 0, 0, 0) // with good directions dfs is faster than bfs here
 				if res == 0 {
 					blocking = b
 					break
@@ -121,17 +112,7 @@ func part2(input string) (string, error) {
 	return strconv.Itoa(blocking.x) + "," + strconv.Itoa(blocking.y), nil
 }
 
-func dfs(mapGrid [][]int, visited [][]int) int {
-	for i := range visited {
-		for j := range visited[i] {
-			visited[i][j] = 0
-		}
-	}
-	visited[0][0] = 1
-	return dfsHelper(mapGrid, visited, 0, 0, 0)
-}
-
-func dfsHelper(mapGrid [][]int, visited [][]int, x, y, steps int) int {
+func dfs(mapGrid [][]int, visited [][]int, x, y, steps int) int {
 	if x == gridSize-1 && y == gridSize-1 {
 		visited[y][x] = 2
 		return steps
@@ -140,7 +121,7 @@ func dfsHelper(mapGrid [][]int, visited [][]int, x, y, steps int) int {
 		nx, ny := x+d[0], y+d[1]
 		if nx >= 0 && nx < gridSize && ny >= 0 && ny < gridSize && mapGrid[ny][nx] == 0 && visited[ny][nx] == 0 {
 			visited[ny][nx] = 1
-			res := dfsHelper(mapGrid, visited, nx, ny, steps+1)
+			res := dfs(mapGrid, visited, nx, ny, steps+1)
 			if res != 0 {
 				visited[y][x] = 2
 				return res
