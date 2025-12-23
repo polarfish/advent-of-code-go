@@ -150,10 +150,7 @@ func isValidRectangle(edges []edge, p1 point, p2 point) bool {
 		eyt := min(e.y1, e.y2)
 		eyb := max(e.y1, e.y2)
 
-		verticalIntersection := exl == exr && exl > rxl && exr < rxr && (eyt > ryt && eyt < ryb || eyb > ryt && eyb < ryb || eyt <= ryt && eyb >= ryb)
-		horizontalIntersection := eyt == eyb && eyt > ryt && eyb < ryb && (exl > rxl && exl < rxr || exr > rxl && exr < rxr || exl <= rxl && exr >= rxr)
-
-		if verticalIntersection || horizontalIntersection {
+		if rxl < exr && rxr > exl && ryt < eyb && ryb > eyt {
 			return false
 		}
 	}
