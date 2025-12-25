@@ -1,7 +1,9 @@
 package year2025day09
 
 import (
+	"cmp"
 	_ "embed"
+	slices "slices"
 	"strconv"
 	"strings"
 
@@ -62,7 +64,8 @@ func part2(input string) (string, error) {
 		}
 	}
 	corners := [][]point{{}, {}, {}, {}}
-	edges := make([]edge, len(points))
+	verticalEdges := make([]edge, 0)
+	horizontalEdges := make([]edge, 0)
 	for i := 0; i < len(points); i++ {
 		p1, p2 := points[i], points[(i+1)%len(points)]
 		switch dir {
@@ -70,11 +73,13 @@ func part2(input string) (string, error) {
 			if p2.x > p1.x {
 				dir = right
 				corners[topLeft] = append(corners[topLeft], p1)
+				horizontalEdges = append(horizontalEdges, edge{p1.x, p1.y, p2.x, p2.y})
 			} else {
 				dir = left
 				corners[topLeft] = append(corners[topLeft], p1)
 				corners[bottomLeft] = append(corners[bottomLeft], p1)
 				corners[bottomRight] = append(corners[bottomRight], p1)
+				horizontalEdges = append(horizontalEdges, edge{p2.x, p2.y, p1.x, p1.y})
 			}
 		case bottom:
 			if p2.x > p1.x {
@@ -82,19 +87,23 @@ func part2(input string) (string, error) {
 				corners[topLeft] = append(corners[topLeft], p1)
 				corners[topRight] = append(corners[topRight], p1)
 				corners[bottomRight] = append(corners[bottomRight], p1)
+				horizontalEdges = append(horizontalEdges, edge{p1.x, p1.y, p2.x, p2.y})
 			} else {
 				dir = left
 				corners[bottomRight] = append(corners[bottomRight], p1)
+				horizontalEdges = append(horizontalEdges, edge{p2.x, p2.y, p1.x, p1.y})
 			}
 		case right:
 			if p2.y > p1.y {
 				dir = bottom
 				corners[topRight] = append(corners[topRight], p1)
+				verticalEdges = append(verticalEdges, edge{p1.x, p1.y, p2.x, p2.y})
 			} else {
 				dir = top
 				corners[topRight] = append(corners[topRight], p1)
 				corners[topLeft] = append(corners[topLeft], p1)
 				corners[bottomLeft] = append(corners[bottomLeft], p1)
+				verticalEdges = append(verticalEdges, edge{p2.x, p2.y, p1.x, p1.y})
 			}
 		case left:
 			if p2.y > p1.y {
@@ -102,21 +111,29 @@ func part2(input string) (string, error) {
 				corners[topRight] = append(corners[topRight], p1)
 				corners[bottomRight] = append(corners[bottomRight], p1)
 				corners[bottomRight] = append(corners[bottomRight], p1)
+				verticalEdges = append(verticalEdges, edge{p1.x, p1.y, p2.x, p2.y})
 			} else {
 				dir = top
 				corners[bottomLeft] = append(corners[bottomLeft], p1)
+				verticalEdges = append(verticalEdges, edge{p2.x, p2.y, p1.x, p1.y})
 			}
 		}
-
-		edges[i] = edge{p1.x, p1.y, p2.x, p2.y}
 	}
+
+	slices.SortFunc(verticalEdges, func(a, b edge) int {
+		return cmp.Compare(a.x1, b.x1)
+	})
+
+	slices.SortFunc(horizontalEdges, func(a, b edge) int {
+		return cmp.Compare(a.y1, b.y1)
+	})
 
 	for _, tl := range corners[topLeft] {
 		for _, br := range corners[bottomRight] {
 			if tl.x < br.x && tl.y < br.y {
 				w, h := br.x-tl.x+1, br.y-tl.y+1
 				area := int64(w) * int64(h)
-				if area > result && isValidRectangle(edges, tl, br) {
+				if area > result && isValidRectangle(verticalEdges, horizontalEdges, tl, br) {
 					result = area
 				}
 			}
@@ -128,7 +145,7 @@ func part2(input string) (string, error) {
 			if bl.x < tr.x && bl.y > tr.y {
 				w, h := tr.x-bl.x+1, bl.y-tr.y+1
 				area := int64(w) * int64(h)
-				if area > result && isValidRectangle(edges, bl, tr) {
+				if area > result && isValidRectangle(verticalEdges, horizontalEdges, bl, tr) {
 					result = area
 				}
 			}
@@ -138,22 +155,24 @@ func part2(input string) (string, error) {
 	return strconv.FormatInt(result, 10), nil
 }
 
-func isValidRectangle(edges []edge, p1 point, p2 point) bool {
+func isValidRectangle(verticalEdges []edge, horizontalEdges []edge, p1 point, p2 point) bool {
 	rxl := min(p1.x, p2.x)
 	rxr := max(p1.x, p2.x)
 	ryt := min(p1.y, p2.y)
 	ryb := max(p1.y, p2.y)
 
-	for _, e := range edges {
-		exl := min(e.x1, e.x2)
-		exr := max(e.x1, e.x2)
-		eyt := min(e.y1, e.y2)
-		eyb := max(e.y1, e.y2)
-
-		if rxl < exr && rxr > exl && ryt < eyb && ryb > eyt {
+	for _, e := range verticalEdges {
+		if rxl < e.x2 && rxr > e.x1 && ryt < e.y2 && ryb > e.y1 {
 			return false
 		}
 	}
+
+	for _, e := range horizontalEdges {
+		if rxl < e.x2 && rxr > e.x1 && ryt < e.y2 && ryb > e.y1 {
+			return false
+		}
+	}
+
 	return true
 }
 
