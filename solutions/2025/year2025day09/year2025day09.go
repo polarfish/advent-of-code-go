@@ -139,12 +139,12 @@ func part2(input string) (string, error) {
 }
 
 func isValidRectangle(edges []edge, p1 point, p2 point) bool {
-	for _, e := range edges {
-		rxl := min(p1.x, p2.x)
-		rxr := max(p1.x, p2.x)
-		ryt := min(p1.y, p2.y)
-		ryb := max(p1.y, p2.y)
+	rxl := min(p1.x, p2.x)
+	rxr := max(p1.x, p2.x)
+	ryt := min(p1.y, p2.y)
+	ryb := max(p1.y, p2.y)
 
+	for _, e := range edges {
 		exl := min(e.x1, e.x2)
 		exr := max(e.x1, e.x2)
 		eyt := min(e.y1, e.y2)
