@@ -34,3 +34,6 @@ year*.txt
 # jetbrains
 .idea
 *.iml
+
+# MacOS
+.DS_Store
