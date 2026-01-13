@@ -22,11 +22,10 @@ func part1(input string) (string, error) {
 	for _, line := range utils.Lines(input) {
 		var n int64
 		// numbers fit in 64-bit
-		v, err := strconv.ParseInt(line, 10, 64)
+		n, err := strconv.ParseInt(line, 10, 64)
 		if err != nil {
 			return "", err
 		}
-		n = v
 		for range 2000 {
 			n = transform(n)
 		}
@@ -38,7 +37,7 @@ func part1(input string) (string, error) {
 func part2(input string) (string, error) {
 	seq := make([]int, 4)
 	i := 0
-	totals := make(map[marker]int, 3000)
+	totals := make(map[marker]int)
 
 	for _, line := range utils.Lines(input) {
 		n, err := strconv.ParseInt(line, 10, 64)
@@ -46,7 +45,7 @@ func part2(input string) (string, error) {
 			return "", err
 		}
 		n2 := n
-		currents := make(map[marker]int)
+		currents := make(map[marker]int, 3000)
 		for range 2000 {
 			n2 = transform(n2)
 
