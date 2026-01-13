@@ -1,5 +1,6 @@
 - 2024 day 20 - refactor part 2, try using the new part 2 solution for part 1
 - 2024 day 21 - refactor after initial translation to better match go style
+- 2024 day 21 - apply byte shifting part2 improvements (stored as a side function)
 - 2025 day 2 - try increment ids with a pre-computed steps
 - 2025 day 8 - try using min-heap for sorting on the go
 - 2025 day 10 - try solving it with https://pkg.go.dev/gonum.org/v1/gonum@v0.16.0/optimize/convex/lp

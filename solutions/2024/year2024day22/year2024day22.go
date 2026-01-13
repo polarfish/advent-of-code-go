@@ -83,6 +83,54 @@ func part2(input string) (string, error) {
 	return strconv.Itoa(max), nil
 }
 
+func part2improved(input string) (string, error) {
+	seq := 0
+	i := 0
+	totals := make(map[int]int)
+
+	for _, line := range utils.Lines(input) {
+		n, err := strconv.ParseInt(line, 10, 64)
+		if err != nil {
+			return "", err
+		}
+		n2 := n
+		currents := make(map[int]int, 3000)
+		for range 2000 {
+			n2 = transform(n2)
+
+			p := int(n % 10)
+			p2 := int(n2 % 10)
+			val := p2 - p
+			seq |= (val & 0xff) << (8 * i)
+			i++
+			if i == 4 {
+				m := seq
+				if _, ok := currents[m]; !ok {
+					currents[m] = p2
+				}
+				// remove first byte (oldest)
+				seq = (seq >> 8) & 0xffffff
+				i--
+			}
+
+			n = n2
+		}
+
+		for k, v := range currents {
+			totals[k] += v
+		}
+	}
+
+	max := 0
+	for _, v := range totals {
+		if v > max {
+			max = v
+		}
+	}
+
+	return strconv.Itoa(max), nil
+}
+
 func transform(n int64) int64 {
 	n = (n ^ (n << 6)) & 16777215
 	n = (n ^ (n >> 5)) & 16777215
